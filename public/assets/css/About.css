@@ -1,0 +1,112 @@
+
+body {
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Hero */
+.hero-section {
+  background: linear-gradient(135deg, #0d6efd, #20c997);
+  padding: 80px 0;
+}
+
+/* About Icon */
+.about-icon {
+  font-size: 140px;
+  color: #0d6efd;
+}
+
+/* Feature Cards */
+.feature-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+}
+
+.feature-card i {
+  font-size: 40px;
+  color: #20c997;
+  margin-bottom: 15px;
+}
+
+/* Mission */
+.mission-text {
+  max-width: 700px;
+  margin: auto;
+  font-size: 18px;
+  color: #555;
+}
+
+/* Footer */
+/*.footer {
+  background: linear-gradient(135deg, #0d6efd, #20c997);
+}*/
+.dashboard-footer {
+  background: linear-gradient(90deg, #0d6efd, #198754);
+  color: #eafaf1;
+  padding: 50px 0 20px;
+}
+
+.footer-title {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.footer-text {
+  color: #eafaf1;
+  line-height: 1.7;
+}
+
+
+.footer-links a {
+  color: #eafaf1;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+
+.footer-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.footer-divider {
+  border-color: rgba(255,255,255,0.25);
+}
+
+
+.footer-bottom {
+  font-size: 13px;
+  color: #d1fae5;
+}
+.dashboard-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #20c997;
+  background-color: white;
+} 
+
+
+.brand-text {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  /* Gradient text */
+  background: linear-gradient(90deg, #000000, #000000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-family: "Segoe UI", "Poppins", sans-serif;
+  margin-left: 10px;
+}

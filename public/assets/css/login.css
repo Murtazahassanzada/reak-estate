@@ -1,0 +1,61 @@
+/* LOGIN PAGE */
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+
+}
+
+
+.login-page {
+  background: url('../image/Bg.jpg') no-repeat center center/cover;
+  min-height: 100vh;   /* 🔥 مهم — به جای height */
+}
+
+.login-overlay {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(0.50px);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  color: #fff;
+}
+
+.login-card h2 {
+  font-weight: bold;
+}
+
+.login-card input {
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  padding: 12px;
+}
+
+.login-btn {
+  background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+  color: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+}
+
+.login-btn:hover {
+  opacity: 0.9;
+}
+
+.login-card a {
+  color: #fff;
+  text-decoration: underline;
+  font-size: 14px;
+}

@@ -1,0 +1,171 @@
+/* ===============================
+   REPORT PAGE - ADMIN PANEL
+   REMS
+================================ */
+
+/* General */
+body {
+  background: #f4f8f7;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+/* Header */
+.admin-header {
+  background: linear-gradient(90deg, #0d6efd, #20c997);
+  color: #fff;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-header h4 {
+  margin: 0;
+  font-weight: 700;
+}
+
+.admin-header small {
+  opacity: 0.9;
+}
+
+/* Cards */
+.stat-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: transform .3s ease, box-shadow .3s ease;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.15);
+}
+
+.stat-card i {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.stat-card h5 {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.stat-card p {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Colors */
+.stat-card.blue i,
+.stat-card.blue p {
+  color: #0d6efd;
+}
+
+.stat-card.green i,
+.stat-card.green p {
+  color: #198754;
+}
+
+.stat-card.red i,
+.stat-card.red p {
+  color: #dc3545;
+}
+
+/* Report Table */
+.property-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.card-header-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-header-custom h5 {
+  font-weight: 700;
+}
+
+/* footer*/
+/* =========================
+   FOOTER
+========================= */
+/* =========================
+   FOOTER (Blue - Green)
+========================= */
+
+.dashboard-footer {
+  background: linear-gradient(90deg, #0d6efd, #20c997);
+  color: #eafaf1;
+  padding: 50px 0 20px;
+}
+
+.footer-title {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.footer-text {
+  color: #eafaf1;
+  line-height: 1.7;
+}
+
+
+.footer-links a {
+  color: #eafaf1;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+
+.footer-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.footer-divider {
+  border-color: rgba(255,255,255,0.25);
+}
+
+
+.footer-bottom {
+  font-size: 13px;
+  color: #d1fae5;
+}
+
+.dashboard-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #20c997;
+  background-color: white;
+}
+
+
+
+/* REal estate  */
+.brand-text {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  /* Gradient text */
+  background: linear-gradient(90deg, #000000, #000000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-family: "Segoe UI", "Poppins", sans-serif;
+  margin-left: 10px;
+}
