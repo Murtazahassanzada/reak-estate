@@ -1,16 +1,42 @@
-// ===============================
-// REPORT PAGE - FRONTEND JS
-// REMS ADMIN PANEL
-// ===============================
-
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Card click demo
-  document.querySelectorAll(".stat-card").forEach(card => {
+  const cards = document.querySelectorAll(".stat-card");
+
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+
     card.addEventListener("click", function () {
-      const title = this.querySelector("h5").innerText;
-      alert(title + " report clicked (Demo)");
+
+      // گرفتن متن امن
+      const value = this.querySelector("h2")?.innerText || "";
+      const label = this.querySelector("p")?.innerText || "Report";
+
+      // به جای alert → UX بهتر
+      showToast(label + ": " + value);
+
     });
+
   });
 
 });
+
+
+// ✅ Toast حرفه‌ای
+function showToast(message) {
+
+  let toast = document.createElement("div");
+  toast.className = "custom-toast";
+  toast.innerText = message;
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 100);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}

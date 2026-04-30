@@ -1,60 +1,77 @@
-<nav class="navbar navbar-expand-lg dashboard-navbar">
-  <div class="container">
+{{-- ================= GUEST MENU ================= --}}
 
-    <!-- LOGO -->
-    <a class="navbar-brand d-flex align-items-center" href="{{ url('/dashboard') }}">
-      <img src="{{ asset('assets/image/LOGO.png') }}" class="dashboard-logo" alt="Logo">
-      <span class="brand-text ms-2">REAL ESTATE</span>
+{{-- CENTER MENU --}}
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}"
+       href="{{ url('/dashboard') }}">
+        <i class="fa-solid fa-gauge-high"></i>
+        {{ __('site.nav.dashboard') }}
     </a>
+</li>
 
-    <!-- MOBILE BUTTON -->
-    <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mainMenu"
-            aria-controls="mainMenu"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('about') ? 'active' : '' }}"
+       href="{{ url('/about') }}">
+        <i class="fa-solid fa-circle-info"></i>
+        {{ __('site.nav.about') }}
+    </a>
+</li>
 
-    <!-- MENU -->
-    <div class="collapse navbar-collapse" id="mainMenu">
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}"
+       href="{{ url('/contact') }}">
+        <i class="fa-solid fa-phone"></i>
+        {{ __('site.nav.contact') }}
+    </a>
+</li>
+{{-- 🔔 Notification --}}
+<li class="nav-item me-3 position-relative">
+  <a href="{{ auth()->check() ? route('inbox') : route('login') }}"
+     class="nav-link position-relative">
 
-      <!-- ✅ وسط واقعی -->
-      <ul class="navbar-nav mx-auto gap-4">
+    <i class="fa-solid fa-bell"></i>
 
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}"
-             href="{{ url('/dashboard') }}">
-            <i class="fa-solid fa-gauge-high"></i> Dashboard
-          </a>
-        </li>
+    @auth
+    <span id="notif-count"
+          class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+          style="{{ ($unreadNotifications ?? 0) == 0 ? 'display:none' : '' }}">
+        {{ $unreadNotifications ?? 0 }}
+    </span>
+    @endauth
 
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('about') ? 'active' : '' }}"
-             href="{{ url('/about') }}">
-            <i class="fa-solid fa-circle-info"></i> About
-          </a>
-        </li>
+  </a>
+</li>
 
-        <li class="nav-item">
-          <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}"
-             href="{{ url('/contact') }}">
-            <i class="fa-solid fa-phone"></i> Contact
-          </a>
-        </li>
+{{-- LOGIN (Guest only) --}}
+@guest
+<li class="nav-item">
+  <a class="nav-link login-link" href="{{ url('/login') }}">
+    <i class="fa-solid fa-right-to-bracket"></i>
+    {{ __('site.auth.login') }}
+  </a>
+</li>
+@endguest
 
-      </ul>
+{{-- LOGOUT --}}
+@auth
+<li class="nav-item">
+<button type="button"
+        class="nav-link border-0 bg-transparent"
+        data-bs-toggle="modal"
+        data-bs-target="#logoutModal">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Logout
+</button>
+</li>
+@endauth
 
-      <!-- RIGHT SIDE -->
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link login-link" href="{{ url('/login') }}">
-            <i class="fa-solid fa-right-to-bracket"></i> Login
-          </a>
-        </li>
-      </ul>
+{{-- LANGUAGE --}}
+<li class="nav-item">
+  <a class="nav-link {{ app()->getLocale() == 'fa' ? 'active' : '' }}"
+     href="{{ route('lang','fa') }}">FA</a>
+</li>
 
-    </div>
-  </div>
-</nav>
+<li class="nav-item">
+  <a class="nav-link {{ app()->getLocale() == 'en' ? 'active' : '' }}"
+     href="{{ route('lang','en') }}">EN</a>
+</li>

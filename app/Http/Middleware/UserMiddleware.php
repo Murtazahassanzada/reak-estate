@@ -28,22 +28,21 @@ class UserMiddleware
 public function handle(Request $request, Closure $next): Response
 {
     //dd(Auth::user()->role);
-    if (!Auth::check()) {
-        return redirect()->route('login');
-    }
-
-    $role = strtolower(trim(Auth::user()->role));
-
-    if ($role === 'user') {
-        return $next($request);
-    }
-
-    if ($role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-
-    // اگر role خراب بود
-    Auth::logout();
+  if (!Auth::check()) {
     return redirect()->route('login');
+}
+
+$user = Auth::user();
+
+if ($user->isAdmin()) {
+    return redirect()->route('admin.dashboard');
+}
+
+if ($user->role === 'user') {
+    return $next($request);
+}
+
+Auth::logout();
+return redirect()->route('login');
 }
 }

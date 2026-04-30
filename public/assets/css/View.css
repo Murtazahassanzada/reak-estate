@@ -1,87 +1,618 @@
+/* ======================
+   GLOBAL
+====================== */
 body {
-  background: #f4f9fb;
+  background: #f5f7fc;
+  font-family: 'Inter', "Segoe UI", "Poppins", Arial, sans-serif;
+  color: #1e293b;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
 }
 
+/* ======================
+   NAVBAR (CLEAN BAYUT STYLE)
+====================== */
 .custom-nav {
-  background: linear-gradient(90deg, #0d6efd, #20c997);
+  background: #ffffff;
+  border-bottom: 1px solid #eef2f7;
+  padding: 14px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+/* ======================
+   BRAND
+====================== */
+.brand-text {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.brand-text::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.brand-text:hover::after {
+  width: 80px;
+}
+
+/* ======================
+   LOGO
+====================== */
+.dashboard-logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.dashboard-logo:hover {
+  transform: scale(1.02);
+}
+
+/* ======================
+   BACK BUTTON
+====================== */
+.custom-nav .btn-light {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 40px;
+  padding: 8px 20px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #475569;
+  transition: all 0.2s;
+}
+
+.custom-nav .btn-light:hover {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.custom-nav .btn-light i {
+  font-size: 14px;
+}
+
+/* ======================
+   MAIN VIEW CARD (LUXURY)
+====================== */
 .view-card {
-  border-top: 5px solid #20c997;
-  border-radius: 12px;
+  border: none;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.view-card:hover {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+}
+
+/* ======================
+   PROPERTY IMAGE SECTION
+====================== */
+.carousel {
+  height: 100%;
+  min-height: 480px;
+}
+
+.carousel-inner {
+  height: 100%;
+}
+
+.carousel-item {
+  height: 100%;
 }
 
 .property-img {
-  height: 100%;
+  width: 100%;
+  height: 480px;
   object-fit: cover;
 }
 
-
-.dashboard-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #20c997;
-  background-color: white;
+/* Carousel Controls */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 8%;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50px;
+  margin: 0 15px;
+  height: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s;
 }
 
-/* Brand Text beside Logo */
-.brand-text {
-  font-size: 22px;
+.view-card:hover .carousel-control-prev,
+.view-card:hover .carousel-control-next {
+  opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.carousel-indicators button {
+  width: 45px;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 0 4px;
+}
+
+.carousel-indicators button.active {
+  background: #2563eb;
+}
+
+/* ======================
+   DETAILS SECTION
+====================== */
+.card-body {
+  padding: 32px !important;
+}
+
+/* Title */
+.card-body h2 {
+  font-size: 28px;
   font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-
-  /* Gradient text */
-  background: linear-gradient(90deg, #000000, #000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-family: "Segoe UI", "Poppins", sans-serif;
-  margin-left: 10px;
+  color: #0f172a;
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
 }
 
-/* =========================
-FOOTER (Blue - Green)
-========================= */
+/* Badge */
+.card-body .badge {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  margin-bottom: 20px;
+  display: inline-block;
+}
 
+/* Info lines */
+.card-body p {
+  font-size: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-body p i {
+  width: 22px;
+  font-size: 16px;
+}
+
+/* Price Tag */
+.price-tag {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #16a34a !important;
+  background: #ecfdf5;
+  padding: 12px 18px;
+  border-radius: 16px;
+  margin: 16px 0 !important;
+  border: 1px solid #d1fae5;
+}
+
+.price-tag i {
+  font-size: 24px;
+  color: #16a34a;
+}
+
+/* ======================
+   FEATURE BOXES (Bayut style tiles)
+====================== */
+.feature-box {
+  background: #f8fafc;
+  border: 1px solid #eef2f7;
+  border-radius: 18px;
+  padding: 18px 12px;
+  text-align: center;
+  transition: all 0.25s ease;
+  font-size: 22px;
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  border-color: #d1dbe8;
+}
+
+.feature-box strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 8px;
+}
+
+.feature-box .small {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* ======================
+   DESCRIPTION BOX
+====================== */
+.description-box {
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 18px;
+  border: 1px solid #eef2f7;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #334155;
+  margin: 20px 0;
+}
+
+/* ======================
+   ACTION BUTTONS (PROFESSIONAL)
+====================== */
+.d-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.d-grid .btn {
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+/* Save Button */
+.btn-outline-secondary {
+  border: 1.5px solid #cbd5e1;
+  background: white;
+  color: #475569;
+}
+
+.btn-outline-secondary:hover {
+  border-color: #ef4444;
+  background: #fee2e2;
+  color: #dc2626;
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: #dc2626;
+  border: none;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+}
+
+/* Primary Button (Contact) */
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+/* Textarea */
+.form-control {
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  font-size: 14px;
+  resize: vertical;
+  transition: all 0.2s;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+}
+
+/* ======================
+   FOOTER (DARK NAVY - BAYUT STYLE)
+====================== */
 .dashboard-footer {
-  background: linear-gradient(90deg, #0d6efd, #20c997);
-  color: #eafaf1;
-  padding: 50px 0 20px;
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 60px 0 24px;
+  margin-top: 60px;
+  border-top: 1px solid #1e293b;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
 }
 
 .footer-title {
+  font-size: 16px;
+  font-weight: 700;
   color: #ffffff;
-  font-weight: 600;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer-title::after {
+  content: '';
+  width: 35px;
+  height: 2px;
+  background: #2563eb;
+  display: block;
+  margin-top: 8px;
+  border-radius: 2px;
 }
 
 .footer-text {
-  color: #eafaf1;
+  font-size: 14px;
   line-height: 1.7;
+  color: #94a3b8;
 }
 
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
 
 .footer-links a {
-  color: #eafaf1;
+  color: #94a3b8;
   text-decoration: none;
-  transition: 0.3s;
+  transition: all 0.2s;
+  font-size: 14px;
 }
-
 
 .footer-links a:hover {
   color: #ffffff;
-  text-decoration: underline;
+  transform: translateX(5px);
+  display: inline-block;
 }
 
 .footer-divider {
-  border-color: rgba(255,255,255,0.25);
+  border: none;
+  height: 1px;
+  background: rgba(148, 163, 184, 0.15);
+  margin: 30px 0;
 }
 
-
 .footer-bottom {
+  text-align: center;
   font-size: 13px;
-  color: #d1fae5;
+  color: #64748b;
+  padding-top: 20px;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 992px) {
+  .property-img {
+    height: 400px;
+  }
+  
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  
+  .card-body h2 {
+    font-size: 24px;
+  }
+  
+  .price-tag {
+    font-size: 24px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-nav {
+    padding: 10px 16px;
+  }
+  
+  .brand-text {
+    font-size: 16px;
+  }
+  
+  .dashboard-logo {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .property-img {
+    height: 300px;
+  }
+  
+  .card-body {
+    padding: 20px !important;
+  }
+  
+  .card-body h2 {
+    font-size: 20px;
+  }
+  
+  .feature-box {
+    padding: 12px 8px;
+  }
+  
+  .feature-box strong {
+    font-size: 18px;
+  }
+  
+  .feature-box {
+    font-size: 18px;
+  }
+  
+  .price-tag {
+    font-size: 20px !important;
+    padding: 8px 12px;
+  }
+  
+  .description-box {
+    padding: 14px;
+    font-size: 13px;
+  }
+  
+  .d-grid .btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 30px;
+  }
+  
+  .footer-title::after {
+    margin: 8px auto 0;
+  }
+  
+  .footer-links a:hover {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 576px) {
+  .property-img {
+    height: 250px;
+  }
+  
+  .carousel-control-prev,
+  .carousel-control-next {
+    opacity: 1;
+    width: 12%;
+  }
+  
+  .feature-box {
+    padding: 10px 6px;
+  }
+  
+  .feature-box strong {
+    font-size: 16px;
+  }
+  
+  .card-body p {
+    font-size: 13px;
+  }
+  
+  .price-tag {
+    font-size: 18px !important;
+  }
+}
+
+/* ======================
+   RTL SUPPORT (FARSI/ARABIC)
+====================== */
+html[dir="rtl"] .brand-text {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .brand-text::after {
+  right: 0;
+  left: auto;
+}
+
+html[dir="rtl"] .custom-nav .btn-light i {
+  transform: rotate(180deg);
+  display: inline-block;
+}
+
+html[dir="rtl"] .card-body p {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+html[dir="rtl"] .footer-links a:hover {
+  transform: translateX(-5px);
+}
+
+/* ======================
+   ANIMATIONS
+====================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.view-card {
+  animation: fadeInUp 0.5s ease;
+}
+
+/* ======================
+   SCROLLBAR
+====================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }

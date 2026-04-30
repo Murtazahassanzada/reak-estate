@@ -7,6 +7,16 @@ use App\Models\User;
 
 class PropertyPolicy
 {
+    public function view(User $user, Property $property)
+    {
+        return true; // همه می‌بینند
+    }
+
+    public function create(User $user): bool
+    {
+        return true;
+    }
+
     public function update(User $user, Property $property)
     {
         return $user->id === $property->user_id;
@@ -15,10 +25,5 @@ class PropertyPolicy
     public function delete(User $user, Property $property)
     {
         return $user->id === $property->user_id;
-    }
-
-    public function create(User $user): bool
-    {
-        return true;
     }
 }

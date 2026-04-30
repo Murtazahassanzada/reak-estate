@@ -24,21 +24,14 @@ class AdminMiddleware
     }*/
 public function handle(Request $request, Closure $next): Response
 {
-    if (!Auth::check()) {
-        return redirect()->route('login');
-    }
-
-    $role = strtolower(trim(Auth::user()->role));
-
-    if ($role === 'admin') {
-        return $next($request);
-    }
-
-    if ($role === 'user') {
-        return redirect()->route('user.panel');
-    }
-
-    Auth::logout();
+if (!Auth::check()) {
     return redirect()->route('login');
+}
+
+if (!Auth::user()->isAdmin()) { // ✅ استفاده از متد مدل
+    abort(403);
+}
+
+    return $next($request);
 }
 }

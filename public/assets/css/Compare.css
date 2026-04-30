@@ -1,87 +1,139 @@
-body {
-  background: #f4f9fb;
-}
-
+/* ===== NAVBAR ===== */
 .custom-nav {
   background: linear-gradient(90deg, #0d6efd, #20c997);
+  padding: 10px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+  /* 👇 مهم */
+  position: relative;
+  border-radius: 25px;
+  margin: 10px;
+  overflow: hidden;
 }
 
+/* 🔥 کج نرم دو طرف */
+.custom-nav::before,
+.custom-nav::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  background: inherit;
+  z-index: 0;
+}
+
+/* سمت چپ */
+.custom-nav::before {
+  left: -40px;
+  transform: skewX(-20deg);
+  border-radius: 30px;
+}
+
+/* سمت راست */
+.custom-nav::after {
+  right: -40px;
+  transform: skewX(20deg);
+  border-radius: 30px;
+}
+
+/* محتوا روی لایه بالا */
+.custom-nav .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* RTL */
+.rtl {
+  direction: rtl;
+}
+
+/* RTL skew fix */
+html[dir="rtl"] .custom-nav::before {
+  transform: skewX(20deg);
+}
+
+html[dir="rtl"] .custom-nav::after {
+  transform: skewX(-20deg);
+}
+
+/* ===== LOGO ===== */
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rtl .logo-box {
+  flex-direction: row-reverse;
+}
+
+/* LOGO IMAGE */
+.dashboard-logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid #20c997;
+}
+
+/* TEXT */
+.brand-text {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ===== BACK BUTTON ===== */
+.back-btn {
+  background: linear-gradient(90deg, #0d6efd, #20c997);
+  color: #fff;
+  border-radius: 30px;
+  padding: 6px 16px;
+  text-decoration: none;
+  transition: 0.3s;
+  border: none;
+}
+
+/* Hover */
+.back-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* RTL ICON */
+.rtl .back-btn i {
+  margin-left: 6px;
+}
+
+/* ===== TITLE ===== */
+.compare-title {
+  font-weight: 700;
+}
+
+/* ===== CARD ===== */
 .compare-card {
-  border-top: 5px solid #20c997;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  border: none;
+  border-radius: 12px;
   transition: 0.3s;
 }
 
 .compare-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
 }
 
-
-.dashboard-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+/* IMAGE */
+.compare-img {
+  max-height: 180px;
   object-fit: cover;
-  border: 2px solid #20c997;
-  background-color: white;
+  border-radius: 10px;
 }
 
-/* Brand Text beside Logo */
-.brand-text {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-
-  /* Gradient text */
-  background: linear-gradient(90deg, #000000, #000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-family: "Segoe UI", "Poppins", sans-serif;
-  margin-left: 10px;
+/* DETAILS */
+.compare-details p {
+  margin-bottom: 8px;
 }
 
-/* =========================
-   FOOTER (Blue - Green)
-========================= */
-
-.dashboard-footer {
-  background: linear-gradient(90deg, #0d6efd, #20c997);
-  color: #eafaf1;
-  padding: 50px 0 20px;
-}
-
-.footer-title {
-  color: #ffffff;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.footer-text {
-  color: #eafaf1;
-  line-height: 1.7;
-}
-
-
-.footer-links a {
-  color: #eafaf1;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-
-.footer-links a:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
-
-.footer-divider {
-  border-color: rgba(255,255,255,0.25);
-}
-
-
-.footer-bottom {
-  font-size: 13px;
-  color: #d1fae5;
+/* RTL TEXT FIX */
+.rtl .compare-details {
+  text-align: right;
 }

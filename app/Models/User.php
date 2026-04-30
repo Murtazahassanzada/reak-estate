@@ -56,5 +56,29 @@ public function properties()
 {
     return $this->hasMany(Property::class);
 }
+public function favorites()
+{
+    return $this->belongsToMany(\App\Models\Property::class, 'favorites');
+}
+public function sentMessages()
+{
+    return $this->hasMany(Message::class,'sender_id');
+}
 
+public function receivedMessages()
+{
+    return $this->hasMany(Message::class,'receiver_id');
+}
+public function notifications()
+{
+    return $this->hasMany(Notification::class);
+}
+public function isAdmin()
+{
+    return $this->role === 'admin';
+}
+public function scopeAdmins($query)
+{
+    return $query->where('role', 'admin');
+}
 }

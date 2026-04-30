@@ -2,393 +2,1011 @@
    GLOBAL
 ====================== */
 body {
-  background: #f5f6f8;
-  font-family: "Segoe UI", Arial, sans-serif;
-  color: #212529;
+  background: #f4f6fb;
+  font-family: "Segoe UI", "Poppins", Arial, sans-serif;
+  color: #1f2937;
+  margin: 0;
+  padding: 0;
 }
 
 /* ======================
-   NAVBAR
+   HEADER / NAVBAR (BAYUT ENTERPRISE CLEAN)
 ====================== */
-/*.navbar {
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+.dashboard-navbar{
+    background: #fBFBFB !important;
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #eef2f7 !important;
+    box-shadow: 0 6px 18px rgba(15,23,42,0.06) !important;
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 
-.navbar-brand {
-  color: #0d6efd !important;
-  font-size: 20px;
+/* ======================
+   BRAND AREA
+====================== */
+.logo-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
 }
 
-.nav-link {
-  font-weight: 500;
-  color: #333 !important;
+.dashboard-logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(15,23,42,0.06);
 }
 
-.nav-link:hover {
-  color: #0d6efd !important;
-}*/
+/* BRAND TEXT (BAYUT STYLE) */
+.brand-text {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a !important;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 
-/* =========================
-   NAVBAR (Blue - Green)
-========================= */
-
-.dashboard-navbar {
-  background: linear-gradient(90deg, #0d6efd, #198754);
-  padding: 12px 20px;
-}
-
-.dashboard-navbar .navbar-brand {
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.dashboard-navbar .nav-link {
-  color: #eafaf1;
-  font-weight: 500;
-  position: relative;
-}
-
-.dashboard-navbar .nav-link:hover,
-.dashboard-navbar .nav-link.active {
-  color: #ffffff;
-}
-
-.dashboard-navbar .nav-link.active::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #ffffff;
-}
-
-.logout-btn {
-  color: #ffd43b !important;
-  font-weight: 600;
-}
-
-/* =========================
-   HERO BANNER
-========================= */
-
-.hero-section {
-  height: 420px;
-  background: url('/assets/image/banner.jpg') center / cover no-repeat;
-  position: relative;/
-}
-
-.hero-overlay {
-  height: 100%;
-  background: rgba(0, 0, 0, 0.);
   display: flex;
   align-items: center;
-  justify-content: center;
+  line-height: 1;
+  position: relative;
+
+  /* ✨ Professional UI upgrades */
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  gap: 6px;
+
+  /* subtle luxury effect */
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  transition: 0.3s ease;
 }
 
-.hero-content {
-  text-align: center;
-  padding: 20px;
+/* 🎯 Accent underline (Bayut style minimal branding line) */
+/* FIX BRAND CONFLICT */
+.brand-text::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 35%;
+  height: 2px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  border-radius: 2px;
+  transition: 0.4s ease;
 }
 
-.hero-title {
-  color: #ffffff;
-  font-size: 42px;
-  font-weight: 700;
-  margin-bottom: 10px;
+/* حذف دایره قبلی بدون حذف کد */
+.brand-text::before{
+  content:"";
+  width:6px;
+  height:6px;
+  background:#2563eb;
+  border-radius:50%;
+  margin-left:8px;
+  display:inline-block;
 }
 
-.hero-subtitle {
-  color: #e5e7eb;
-  font-size: 18px;
-  margin-bottom: 25px;
+/* hover effect */
+.navbar-brand:hover .brand-text {
+  letter-spacing: 1.2px;
+  color: #1d4ed8 !important;
 }
 
+.navbar-brand:hover .brand-text::after {
+  width: 100%;
+}
+
+/* RTL support */
+html[dir="rtl"] .brand-text {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .brand-text::after {
+  right: 0;
+  left: auto;
+}
+
+/* small premium dot */
+.brand-text::after{
+  content:"";
+  width:6px;
+  height:6px;
+  background:#2563eb;
+  border-radius:50%;
+  margin-left:8px;
+  display:inline-block;
+}
+
+/* RTL FIX */
+html[dir="rtl"] .brand-text {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+html[dir="rtl"] .brand-text::after {
+  margin-left:0;
+  margin-right:8px;
+}
+
+/* ======================
+   NAV LINKS (ENTERPRISE UX)
+====================== */
+.navbar-nav .nav-link{
+    color:#0f172a !important;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:10px;
+    transition:0.25s ease;
+    position:relative;
+}
+
+/* ICON FIX (CENTER PERFECT) */
+.navbar-nav .nav-link i{
+    font-size:15px;
+    width:18px;
+    height:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* HOVER (BAYUT SOFT BLUE) */
+.navbar-nav .nav-link:hover{
+    background:#f1f6ff;
+    color:#2563eb !important;
+}
+
+/* ACTIVE */
+.navbar-nav .nav-link.active{
+    background:#e8f0ff;
+    color:#2563eb !important;
+    font-weight:600;
+}
+
+/* ======================
+   LOGIN BUTTON (PREMIUM BAYUT STYLE)
+====================== */
+/* ======================
+   LOGIN BUTTON (PREMIUM BAYUT STYLE) - FIXED
+====================== */
+.login-link {
+    background: #ffffff !important;
+    color: #2563eb !important;
+    border: 1.5px solid #2563eb !important;
+    border-radius: 40px !important;
+    padding: 10px 24px !important;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease !important;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.login-link:hover {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+.login-link:active {
+    transform: translateY(0px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.login-link i {
+    color: inherit !important;
+    font-size: 14px;
+}
+/* 🔥 FIX TEXT NOT VISIBLE */
+.login-link,
+.login-link span,
+.login-link i {
+    color: #2563eb !important;
+}
+
+/* وقتی hover شد */
+.login-link:hover,
+.login-link:hover span,
+.login-link:hover i {
+    color: #ffffff !important;
+}
 /* =========================
-   SEARCH BAR
+   🔥 FIX LOGIN TEXT VISIBILITY
 ========================= */
 
-.hero-search {
-  background: #ffffff;
-  padding: 12px 14px;
-  border-radius: 50px;
-  display: flex;
-  gap: 10px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  flex-wrap: wrap;
-  justify-content: center;
+.navbar-nav .nav-link.login-link {
+    color: #2563eb !important;
+    background: #ffffff !important;
+    border: 1.5px solid #2563eb !important;
 }
 
+/* متن داخل لینک */
+.navbar-nav .nav-link.login-link,
+.navbar-nav .nav-link.login-link span,
+.navbar-nav .nav-link.login-link i {
+    color: #2563eb !important;
+    fill: #2563eb !important;
+}
+
+/* hover */
+.navbar-nav .nav-link.login-link:hover {
+    background: #2563eb !important;
+    color: #ffffff !important;
+}
+
+/* hover icon */
+.navbar-nav .nav-link.login-link:hover i {
+    color: #ffffff !important;
+}
+
+/* ======================
+   CENTER MENU
+====================== */
+.center-menu{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* ======================
+   HERO SECTION (BAYUT CLEAN STYLE)
+====================== */
+/* ======================
+   HERO SECTION (ENTERPRISE BAYUT STYLE)
+====================== */
+.hero-section {
+    height: 460px;
+    position: relative;
+
+    background: url('/assets/image/banner.jpg') center/cover no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+/* SOFT LAYER OVERLAY (better than flat rgba) */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.65),
+        rgba(15, 23, 42, 0.35)
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CONTENT WRAPPER (for better control) */
+.hero-content {
+    position: relative;
+    text-align: center;
+    max-width: 800px;
+    padding: 20px;
+    animation: heroFade 0.8s ease;
+}
+
+/* TITLE (Bayut-style bold clean) */
+.hero-title {
+    color: #ffffff;
+    font-size: 46px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 18px rgba(0,0,0,0.25);
+}
+
+/* SUBTITLE */
+.hero-subtitle {
+    color: #e2e8f0;
+    font-size: 18px;
+    margin-bottom: 22px;
+    line-height: 1.6;
+    opacity: 0.95;
+}
+
+/* subtle animation (enterprise feel) */
+@keyframes heroFade {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ======================
+   RESPONSIVE HERO
+====================== */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 380px;
+    }
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .hero-subtitle {
+        font-size: 15px;
+    }
+}
+
+/* ======================
+   SEARCH BOX
+====================== */
+/* ======================
+   SEARCH BOX (ENTERPRISE BAYUT STYLE)
+====================== */
+.hero-search{
+    background: #ffffff;
+    padding: 14px;
+
+    border-radius: 60px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+
+    border: 1px solid #eef2f7;
+
+    transition: all 0.25s ease;
+}
+
+/* hover soft elevation */
+.hero-search:hover{
+    box-shadow: 0 14px 40px rgba(15,23,42,0.12);
+    transform: translateY(-2px);
+}
+
+/* INPUT + SELECT */
 .hero-search input,
-.hero-search select {
-  border: none;
-  outline: none;
-  padding: 12px 16px;
-  border-radius: 30px;
-  font-size: 14px;
-  min-width: 180px;
+.hero-search select{
+    border: 1px solid #e5e7eb;
+    outline: none;
+
+    padding: 12px 16px;
+    border-radius: 30px;
+
+    min-width: 180px;
+
+    font-size: 14px;
+    color: #1f2937;
+
+    background: #f9fafb;
+
+    transition: 0.25s ease;
 }
 
-.hero-search button {
-  background: #0d6efd;
-  color: #ffffff;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 30px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
+/* focus state (very important for enterprise UI) */
+.hero-search input:focus,
+.hero-search select:focus{
+    background: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
 }
 
-.hero-search button:hover {
-  background: #0b5ed7;
+/* placeholder polish */
+.hero-search input::placeholder{
+    color: #9ca3af;
+}
+
+.hero-search button{
+    background: #ffffff !important;
+    color: #2563eb !important;
+
+    border: 1px solid #e5e7eb;
+    padding: 12px 26px;
+
+    border-radius: 30px;
+    font-weight: 600;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(15,23,42,0.06);
+}
+
+/* HOVER (Blue fill like login) */
+.hero-search button:hover{
+    background: #44ACFF !important;
+    color: #ffffff !important;
+
+    border-color: #2563eb;
+
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37,99,235,0.30);
+}
+
+/* ACTIVE CLICK */
+.hero-search button:active{
+    transform: translateY(0px);
+    box-shadow: 0 6px 15px rgba(37,99,235,0.20);
+}
+
+/* ICON SAFE (if you add icon later) */
+.hero-btn{
+  background:#ffffff;
+  color:#2563eb;
+  border:1px solid #e5e7eb;
+  padding:12px 26px;
+  border-radius:30px;
+  font-weight:600;
+}
+
+.hero-btn:hover{
+  background:#2563eb;
+  color:#fff;
 }
 
 /* ======================
    SUMMARY CARDS
 ====================== */
-.summary-card {
-  background: #fff;
-  padding: 22px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: 0.3s ease;
+.summary-card{
+  background:#2563eb;
+    padding:22px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+    transition:0.3s;
 }
 
-.summary-card:hover {
-  transform: translateY(-6px);
+.summary-card:hover{
+    transform:translateY(-6px);
 }
 
-.summary-card h2 {
-  margin-top: 10px;
-  font-weight: 700;
-  color: #0d6efd;
-}
-
-/* ======================
-   ACTION PANEL
-====================== */
-.action-panel {
-  padding: 40px 0;
-}
-
-.action-card {
-  width: 100%;
-  background: #fff;
-  border: none;
-  padding: 20px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.action-card:hover {
-  transform: translateY(-6px);
-  background: #f8f9fa;
-}
-
-.action-card i {
-  font-size: 26px;
-  color: #0d6efd;
+.summary-card h2{
+    color:#2563eb !important;
 }
 
 /* ======================
-   PROPERTIES SECTION
+   PROPERTY CARD (BAYUT STYLE)
 ====================== */
-.properties-section {
-  padding: 50px 0;
+/* ======================
+   SAFE UI IMPROVEMENTS (NO BREAK)
+====================== */
+
+/* نرم شدن کل UI */
+* {
+  transition: all 0.25s ease;
 }
 
 /* ======================
-   PROPERTY CARD
+   LOGIN BUTTON FIX (NOT SHARP)
 ====================== */
-.property-card {
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-  transition: 0.3s ease;
+.login-link{
+    border-radius: 30px !important; /* نرم */
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(4px);
 }
 
-.property-card:hover {
-  transform: translateY(-8px);
+.login-link:hover{
+    background: rgba(255,255,255,0.22);
+    transform: translateY(-1px);
 }
 
 /* ======================
-   PROPERTY IMAGE
+   NAVBAR SOFT EFFECT
 ====================== */
-.property-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
+.dashboard-navbar{
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* لینک‌ها نرم‌تر */
+.navbar-nav .nav-link{
+    position: relative;
+}
+
+/* underline نرم */
+.navbar-nav .nav-link::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:20%;
+    width:0;
+    height:2px;
+    background:#fff;
+    transition:0.3s;
+}
+
+.navbar-nav .nav-link:hover::after{
+    width:60%;
 }
 
 /* ======================
-   PROPERTY INFO
+   HERO IMPROVEMENT
 ====================== */
-.property-info {
-  padding: 18px;
+/*.hero-overlay{
+    background: rgba(0,0,0,0.45);
+}*/
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        135deg,
+        rgba(15,23,42,0.65),
+        rgba(15,23,42,0.45)
+    );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+/* ======================
+   SEARCH BAR UPGRADE
+====================== */
+.hero-search{
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
-.property-info h5 {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.price {
-  color: #0d6efd;
-  font-weight: 700;
-  font-size: 20px;
-}
-
-.property-meta {
-  font-size: 14px;
-  color: #6c757d;
-  margin-top: 4px;
-}
-
-.property-meta span {
-  margin-right: 12px;
+.hero-search input:focus,
+.hero-search select:focus{
+    box-shadow: 0 0 0 2px rgba(13,110,253,0.2);
 }
 
 /* ======================
-   PROPERTY ACTIONS
+   CARD HOVER EFFECT
 ====================== */
-.property-actions {
-  margin-top: 12px;
-  display: flex;
-  gap: 6px;
+.summary-card:hover,
+.property-card:hover,
+.action-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
 }
 
-.property-actions .btn {
-  font-size: 13px;
-}
-/* Mobile three dots menu */
-/* =========================
-   THREE DOTS MENU STYLE
-========================= */
-
-.menu-dots {
-  font-size: 28px;
-  cursor: pointer;
-  color: #000000;      /* سیاه */
-  margin-left: auto;
-  padding: 6px 10px;
-  user-select: none;
+/* ======================
+   PROPERTY IMAGE ZOOM
+====================== */
+.property-card img{
+    transition: 0.3s;
 }
 
-/* Hover effect */
-.menu-dots:hover {
-  color: #212529;      /* مشکی Bootstrap */
+.property-card:hover img{
+    transform: scale(1.04);
 }
 
-/* Mobile only */
-@media (min-width: 992px) {
-  .menu-dots {
-    display: none;
-  }
+/* ======================
+   BUTTON SOFT STYLE
+====================== */
+button, .btn{
+    border-radius: 25px;
 }
-/* =========================
-   SEARCH BUTTON RESPONSIVE
-========================= */
 
-/* Mobile view */
-@media (max-width: 768px) {
+/* ======================
+   FOOTER SOFT
+====================== */
 
-  .hero-search {
-    flex-direction: column;
-    border-radius: 16px;
+/* ======================
+   RESPONSIVE FIX (SAFE)
+====================== */
+@media (max-width:768px){
+
+  .hero-title{
+    font-size:28px;
   }
 
-  .hero-search input,
-  .hero-search select {
-    width: 100%;
-    min-width: 100%;
+  .hero-search{
+    padding:15px;
   }
 
-  .hero-search button {
-    width: 100%;
-    padding: 14px;
-    font-size: 16px;
-    border-radius: 12px;
+  .summary-card{
+    margin-bottom:15px;
   }
-}
-/* footer*/
-/* =========================
-   FOOTER
-========================= */
-/* =========================
-   FOOTER (Blue - Green)
-========================= */
 
-.dashboard-footer {
-   background: linear-gradient(90deg, #0d6efd, #198754);
-  color: #eafaf1;
-  padding: 50px 0 20px;
+  .property-card{
+    margin-bottom:20px;
+  }
+
 }
 
-.footer-title {
-  color: #ffffff;
-  font-weight: 600;
-  margin-bottom: 15px;
+/* ======================
+   RTL SMALL FIX
+====================== */
+html[dir="rtl"] .navbar-nav .nav-link::after{
+    right:20%;
+    left:auto;
 }
 
-.footer-text {
-  color: #eafaf1;
-  line-height: 1.7;
+/* ======================
+   FOOTER (ENTERPRISE BAYUT DARK)
+====================== */
+/* ======================
+   FOOTER (ENTERPRISE CLEAN REAL ESTATE STYLE)
+====================== */
+
+
+/* FOOTER GRID */
+.footer-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
 }
 
-
-.footer-links a {
-  color: #eafaf1;
-  text-decoration: none;
-  transition: 0.3s;
+/* TITLE */
+.footer-title{
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff !important;
+    margin-bottom: 16px;
+    position: relative;
 }
 
-
-.footer-links a:hover {
-  color: #ffffff;
-  text-decoration: underline;
+/* small accent line (Bayut style) */
+.footer-title::after{
+    content: "";
+    width: 30px;
+    height: 2px;
+    background: #2563eb;
+    display: block;
+    margin-top: 8px;
+    border-radius: 2px;
 }
 
-.footer-divider {
-  border-color: rgba(255,255,255,0.25);
+/* TEXT */
+.footer-text{
+    font-size: 14px;
+    line-height: 1.8;
+    color: #94a3b8 !important;
 }
 
-
-.footer-bottom {
-  font-size: 13px;
-  color: #d1fae5;
-}
-.dashboard-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #20c997;
-  background-color: white;
+/* LINKS */
+.footer-links a{
+    display: block;
+    color: #94a3b8 !important;
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: 0.2s ease;
+    font-size: 14px;
 }
 
-/* Brand Text beside Logo */
-.brand-text {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-
-  /* Gradient text */
-  background: linear-gradient(90deg, #000000, #000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-family: "Segoe UI", "Poppins", sans-serif;
-  margin-left: 10px;
+.footer-links a:hover{
+    color: #ffffff !important;
+    transform: translateX(4px);
 }
 
+/* DIVIDER CLEAN */
+.footer-divider{
+    border: none;
+    height: 1px;
+    background: rgba(148,163,184,0.15);
+    margin: 30px 0;
+}
 
+/* BOTTOM BAR */
+.footer-bottom{
+    text-align: center;
+    font-size: 13px;
+    color: #64748b !important;
+}
+
+/* SOCIAL ICONS (optional enterprise touch) */
+.footer-social{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.footer-social a{
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: #cbd5e1;
+    transition: 0.25s;
+}
+
+.footer-social a:hover{
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* RESPONSIVE */
+@media(max-width: 992px){
+    .footer-container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 576px){
+    .footer-container{
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-links a{
+        display: inline-block;
+        margin: 5px 8px;
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width:991px){
+    .center-menu{
+        position:static;
+        transform:none;
+        flex-direction:column;
+    }
+
+    .hero-title{
+        font-size:32px;
+    }
+
+    .hero-search{
+        border-radius:20px;
+        flex-direction:column;
+    }
+
+    .hero-search input,
+    .hero-search select,
+    .hero-search button{
+        width:100%;
+    }
+
+    .footer-container{
+        grid-template-columns:1fr;
+    }
+}
+.hero-section {
+  height: 520px;
+}
+
+.hero-slide {
+  height: 520px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hero-overlay {
+  height: 100%;
+  background: rgba(15,23,42,0.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-btn{
+  background:#ffffff;
+  color:#0f172a;
+  border:none;
+  padding:12px 24px;
+  border-radius:30px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.hero-btn:hover{
+  background:#2563eb;
+  color:#fff;
+}
+.hero-content{
+  position:relative;
+  z-index:10;
+}
+
+.hero-search{
+  position:relative;
+  z-index:10;
+  backdrop-filter: blur(6px);
+}
+/* ======================
+   🔥 FIX CONFLICTS (DO NOT REMOVE OLD CODE)
+====================== */
+
+/* ❌ حل مشکل دایره کنار لوگو */
+.brand-text::before {
+  display: none !important;
+}
+
+/* ❌ حل conflict ::after (دایره vs underline) */
+.brand-text::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: -6px !important;
+  left: 0 !important;
+  width: 35% !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, #2563eb, #60a5fa) !important;
+  border-radius: 2px !important;
+}
+
+/* hover fix */
+.navbar-brand:hover .brand-text::after {
+  width: 100% !important;
+}
+
+/* RTL fix */
+html[dir="rtl"] .brand-text::after {
+  right: 0 !important;
+  left: auto !important;
+}
+
+/* ======================
+   🔥 NAVBAR CLEAN FIX
+====================== */
+.dashboard-navbar {
+  background: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06) !important;
+}
+
+/* ======================
+   🔥 LOGIN BUTTON FINAL FIX
+====================== */
+.login-link {
+  background: #ffffff !important;
+  color: #2563eb !important;
+  border: 1px solid #e5e7eb !important;
+  backdrop-filter: none !important;
+}
+
+.login-link:hover {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+/* ======================
+   🔥 HERO FINAL FIX
+====================== */
+.hero-section {
+  height: 520px !important;
+}
+
+.hero-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(15,23,42,0.65),
+    rgba(15,23,42,0.45)
+  ) !important;
+}
+
+/* ======================
+   🔥 SEARCH FINAL FIX
+====================== */
+.hero-search {
+  border-radius: 50px !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12) !important;
+}
+
+.hero-search button {
+  background: #ffffff !important;
+  color: #2563eb !important;
+}
+
+.hero-search button:hover {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+/* ======================
+   🔥 NAV LINK UNDERLINE FIX
+====================== */
+.navbar-nav .nav-link::after {
+  background: #2563eb !important;
+}
+
+/* ======================
+   🔥 CARD FIX (HOVER SMOOTH)
+====================== */
+.property-card:hover img {
+  transform: scale(1.05) !important;
+}
+
+/* ======================
+   🔥 FOOTER FINAL FIX
+====================== */
+
+
+/* ======================
+   🔥 GLOBAL SMOOTH UX
+====================== */
+* {
+  transition: all 0.25s ease;
+}
+/*main footer*/
+.dashboard-footer{
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 60px 0 20px;
+}
+
+/* titles */
+.footer-title{
+    color:#ffffff;
+    font-weight:700;
+    margin-bottom:15px;
+    font-size:15px;
+    position:relative;
+}
+
+.footer-title::after{
+    content:"";
+    width:30px;
+    height:2px;
+    background:#c89b3c; /* طلایی */
+    display:block;
+    margin-top:8px;
+}
+
+/* links */
+.footer-links a{
+    color:#94a3b8;
+    display:block;
+    margin-bottom:8px;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.footer-links a:hover{
+    color:#ffffff;
+    padding-left:5px;
+}
+
+/* text */
+.footer-text{
+    font-size:14px;
+    line-height:1.7;
+}
+
+/* bottom */
+.footer-bottom{
+    text-align:center;
+    font-size:13px;
+    color:#64748b;
+    margin-top:30px;
+}
+
+.search-box select,
+.search-box input {
+    transition: all 0.2s ease !important;
+}
+
+.search-box select:focus,
+.search-box input:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.2) !important;
+}
+/* hide top inbox bar */
+/* hide floating inbox */
+/* hide top inbox bar */
+body > a[href*="inbox"]{
+    display:none !important;
+}
+.inbox-bell {
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+#notifDropdown {
+    border-radius: 10px;
+}

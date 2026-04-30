@@ -1,48 +1,59 @@
-/*document.querySelector(".logout-btn").addEventListener("click", function () {
-  if (confirm("Are you sure you want to logout?")) {
-    window.location.href = "login.html";
-  }
-});*/
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* =========================
-     MOBILE THREE-DOTS MENU
-  ========================= */
+    // 🔔 dropdown toggle
+    let bell = document.getElementById("bellBtn");
+    let dropdown = document.getElementById("notifDropdown");
 
-  const menuDots = document.querySelector(".menu-dots");
-  const mainMenu = document.querySelector("#mainMenu");
+    if(bell && dropdown){
+        bell.addEventListener("click", function(e){
+            e.preventDefault();
+            dropdown.classList.toggle("d-none");
+        });
+    }
 
-  if (menuDots && mainMenu) {
-    menuDots.addEventListener("click", function () {
-      mainMenu.classList.toggle("show");
+    // 📱 mobile menu
+    const menuDots = document.querySelector(".menu-dots");
+    const mainMenu = document.querySelector("#mainMenu");
+
+    if (menuDots && mainMenu) {
+        menuDots.addEventListener("click", function () {
+            mainMenu.classList.toggle("show");
+        });
+    }
+
+    // active menu
+    const navLinks = document.querySelectorAll(".navbar .nav-link");
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            navLinks.forEach(l => l.classList.remove("active"));
+            this.classList.add("active");
+        });
     });
-  }
 
-  /* =========================
-     SEARCH BUTTON (MOBILE UX)
-     ✅ اصلاح شده: حذف alert و اجازه submit به فرم
-  ========================= */
+});
 
-  // اگر نیاز به رفتار موبایل داری می‌توانی event اضافی اضافه کنی
-  // اما فعلاً چیزی حذف شد تا فرم واقعی submit شود
-  // const searchBtn = document.querySelector(".hero-search button");
-  // if (searchBtn) {
-  //   searchBtn.addEventListener("click", function () {
-  //     alert("Search functionality will be connected to backend later.");
-  //   });
-  // }
+// ✅ mark all read
+document.addEventListener("click", function(e){
 
-  /* =========================
-     ACTIVE MENU LINK
-  ========================= */
+    if(e.target.id === "markAllBtn"){
 
-  const navLinks = document.querySelectorAll(".navbar .nav-link");
+        fetch('/notifications/read-all', {
+            method:'POST',
+            headers:{
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(() => {
 
-  navLinks.forEach(link => {
-    link.addEventListener("click", function () {
-      navLinks.forEach(l => l.classList.remove("active"));
-      this.classList.add("active");
-    });
-  });
+            let badge = document.getElementById('notifCount');
+
+            if(badge){
+                badge.innerText = 0;
+            }
+
+        });
+
+    }
 
 });

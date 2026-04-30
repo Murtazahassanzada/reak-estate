@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+/*document.addEventListener("DOMContentLoaded", function () {
 
   const data = JSON.parse(localStorage.getItem("viewProperty"));
 
@@ -14,3 +14,4 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("propertyPrice").innerText = data.price;
 
 });
+*/

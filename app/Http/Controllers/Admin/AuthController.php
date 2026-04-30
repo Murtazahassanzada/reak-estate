@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -32,22 +30,26 @@ public function showRegister()
 // =========================
 // Register User
 // =========================
+
+
 public function register(Request $request)
 {
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6|confirmed'
+    $validated = $request->validate([
+        'name' => ['required','string','max:100'],
+        'email' => ['required','email','unique:users,email'],
+        'password' => ['required','min:6','confirmed'],
     ]);
 
+    // ✅ ساخت user
     $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'role' => 'user'
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+        'role' => 'user', // default
     ]);
 
-    Auth::login($user);
+    // ✅ auto login
+    auth()->login($user);
 
     return redirect()->route('user.panel');
 }
@@ -63,10 +65,12 @@ public function forgotPassword()
 // =========================
 // Send Reset Link
 // =========================
+
+
 public function sendResetLink(Request $request)
 {
     $request->validate([
-        'email' => 'required|email|exists:users,email'
+        'email' => ['required','email','exists:users,email']
     ]);
 
     $token = Str::random(64);
@@ -80,7 +84,11 @@ public function sendResetLink(Request $request)
         ]
     );
 
-    return redirect()->route('password.reset', $token);
+    // 🔥 مستقیم redirect (بدون ایمیل)
+    return redirect()->route('password.reset', [
+        'token' => $token,
+        'email' => $request->email
+    ]);
 }
 
 
@@ -98,24 +106,34 @@ public function resetPassword($token)
 // =========================
 public function updatePassword(Request $request)
 {
+    // ✅ validation کامل
     $request->validate([
-        'password' => 'required|min:6|confirmed'
+        'email' => ['required','email'],
+        'password' => ['required','min:6','confirmed'],
+        'token' => ['required']
     ]);
 
+    // ✅ پیدا کردن رکورد
     $reset = DB::table('password_reset_tokens')
+        ->where('email', $request->email)
         ->where('token', $request->token)
         ->first();
 
+    // ❌ اگر پیدا نشد
     if(!$reset){
-        return back()->withErrors(['token'=>'Token invalid']);
+        return back()->withErrors([
+            'email' => 'Token or email invalid'
+        ]);
     }
 
-    User::where('email', $reset->email)->update([
+    // ✅ اپدیت پسورد
+    User::where('email', $request->email)->update([
         'password' => Hash::make($request->password)
     ]);
 
+    // ✅ حذف توکن
     DB::table('password_reset_tokens')
-        ->where('email',$reset->email)
+        ->where('email', $request->email)
         ->delete();
 
     return redirect()->route('login')
@@ -170,56 +188,51 @@ public function updatePassword(Request $request)
     ]);
 
 }*/
+
+
 public function login(Request $request)
 {
-  //  dd(session()->getId());
-  //  dd(Auth::check(), Auth::user(), session()->all());
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
+    $credentials = $request->validate([
+        'email' => ['required','email'],
+        'password' => ['required'],
     ]);
 
-if (Auth::attempt([
-    'email' => $request->email,
-    'password' => $request->password
-])) {
+    if (Auth::attempt($credentials)) {
 
         $request->session()->regenerate();
 
         $user = Auth::user();
 
-     if (strtolower($user->role) === 'admin') {
-    return redirect()->route('admin.dashboard');
-}
+        $role = strtolower(trim($user->role));
 
-if (strtolower($user->role) === 'user') {
-    return redirect()->route('user.panel');
-}
+        if ($role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($role === 'user') {
+            return redirect()->route('user.panel');
+        }
 
         Auth::logout();
-
-        return back()->withErrors([
-            'email' => 'Role not valid'
-        ]);
+        return back()->withErrors(['email' => 'Invalid role']);
     }
 
     return back()->withErrors([
-        'email' => 'Email or Password incorrect'
+        'email' => 'Email or password incorrect'
     ]);
 }
-
 
     // =========================
     // Logout
     // =========================
-    public function logout(Request $request)
+public function logout(Request $request)
 {
     Auth::logout();
 
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect()->route('login'); // ✅ تغییر
+    return redirect('/');
 }
    /* public function logout(Request $request)
     {

@@ -1,48 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'fa' ? 'rtl' : 'ltr' }}">
+
 <head>
-  <meta charset="UTF-8">
-  <title>
-  @yeild('title','Admin Panel')</title>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>@yield('title', __('admin.meta.title'))</title>
 
-  <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/font/bootstrap-icons.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/Admin.css') }}">
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/Admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/Style.css') }}">
 
-  @stack('styles') 
-  {{-- ✅ این خیلی مهم --}}
+    @stack('styles')
 </head>
+
 <body>
 
-@include('partials.admin-header')
+    <!-- HEADER -->
+    @include('partials.header-master')
 
-<div class="container-fluid">
-  <div class="row">
+    <!-- MAIN WRAPPER -->
+    <div class="admin-layout">
 
-    @include('partials.admin-sidebar')
+        <!-- SIDEBAR -->
+        @include('partials.adminsidebar')
 
-    <main class="col-md-10 p-4">
-      @yield('content')
-    </main>
+        <!-- CONTENT -->
+        <div class="admin-content">
+            <main>
+                @yield('content')
+            </main>
+        </div>
 
-  </div>
-</div>
+    </div>
 
-@include('partials.footer')
-
+    <!-- FOOTER -->
+    @include('partials.footer')
 <script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/Admin.js') }}"></script>
-<script>
-const logoutBtn = document.getElementById('logoutBtn');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', function(e){
-      e.preventDefault();
-      var myModal = new bootstrap.Modal(document.getElementById('logoutModal'));
-      myModal.show();
-  });
-}
-</script>
 @stack('scripts')
 </body>
 </html>

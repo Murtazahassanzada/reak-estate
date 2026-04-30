@@ -8,10 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('User')->after('email');
-            $table->string('status')->default('Active')->after('role');
-        });
+ Schema::table('users', function (Blueprint $table) {
+    $table->enum('role', ['user', 'admin'])
+          ->default('user')
+          ->after('email');
+
+    $table->enum('status', ['active', 'inactive'])
+          ->default('active')
+          ->after('role');
+});
     }
 
     public function down(): void

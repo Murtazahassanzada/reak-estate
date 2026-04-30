@@ -1,118 +1,168 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Models\Notification;
+use App\Models\User;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Http\Requests\StorePropertyRequest;
 use App\Http\Requests\UpdatePropertyRequest;
 
 class PropertyController extends Controller
 {
-  use AuthorizesRequests;
-    public function index()
-    {
-        $properties = Property::with('user')
+   public function index()
+{
+    $properties = Property::with('images','user')
 
-            ->when(request('search'), function ($query) {
-                $query->where('title', 'like', '%' . request('search') . '%');
-            })
+        ->when(request('search'), fn($q) =>
+            $q->where('title', 'like', '%' . request('search') . '%')
+        )
 
-            ->when(request('status'), function ($query) {
-                $query->where('status', request('status'));
-            })
+        ->when(request('status'), fn($q) =>
+            $q->where('status', request('status'))
+        )
 
-            ->when(request('location'), function ($query) {
-                $query->where('location', 'like', '%' . request('location') . '%');
-            })
+        ->when(request('location'), fn($q) =>
+            $q->where('location', 'like', '%' . request('location') . '%')
+        )
 
-            ->when(request('type'), function ($query) {
-                $query->where('type', request('type'));
-            })
+        ->when(request('type'), fn($q) =>
+            $q->where('type', request('type'))
+        )
 
-            ->when(request('purpose'), function ($query) {
-                $query->where('purpose', request('purpose'));
-            })
+        ->when(request('purpose'), fn($q) =>
+            $q->where('purpose', request('purpose'))
+        )
 
-            ->latest()
-            ->paginate(5)
-            ->withQueryString();
+    
+->latest()
+->paginate(10);
 
-        return view('admin.properties.index', compact('properties'));
-    }
+    return view('admin.properties.index', compact('properties'));
+}
 
-
+    // =========================
+    // STORE (Admin create property)
+    // =========================
     public function store(StorePropertyRequest $request)
     {
-        $property = Property::create($request->validated() + [
-            'user_id' => Auth::id(),
-        ]);
+        DB::transaction(function () use ($request) {
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $imageName = Str::uuid() . '.' . $image->extension();
-                $image->storeAs('properties', $imageName, 'public');
+            $property = Property::create([
+                ...$request->validated(),
+                'user_id' => Auth::id(),
+             'status' => 'approved',
+            'approved_by' => Auth::id(),
+            'approved_at' => now(),
+            ]);
 
-                $property->images()->create([
-                    'image' => $imageName
-                ]);
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+
+                    $imageName = Str::uuid() . '.' . $image->extension();
+                    $image->storeAs('properties', $imageName, 'public');
+
+                    $property->images()->create([
+                        'image' => $imageName
+                    ]);
+                }
             }
-        }
+        });
 
-        return redirect()->route('properties.index')
-            ->with('success', 'Property Added Successfully');
+        return back()->with('success', 'Property created and sent for approval');
     }
 
-
+    // =========================
+    // UPDATE
+    // =========================
     public function update(UpdatePropertyRequest $request, Property $property)
     {
-        $this->authorize('update', $property);
+        DB::transaction(function () use ($request, $property) {
 
-        $property->update($request->validated());
+            $property->update([
+                ...$request->validated(),
+               'status' => 'approved', // دوباره review
+            ]);
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $imageName = Str::uuid() . '.' . $image->extension();
-                $image->storeAs('properties', $imageName, 'public');
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
 
-                $property->images()->create([
-                    'image' => $imageName
-                ]);
+                    $imageName = Str::uuid() . '.' . $image->extension();
+                    $image->storeAs('properties', $imageName, 'public');
+
+                    $property->images()->create([
+                        'image' => $imageName
+                    ]);
+                }
             }
-        }
+        });
 
-        return redirect()->route('properties.index')
-            ->with('success', 'Property Updated Successfully');
+        return back()->with('success', 'Property updated and sent for review');
     }
 
-
-    public function destroy(Property $property)
+    // =========================
+    // APPROVE
+    // =========================
+    public function approve(Property $property)
     {
-        $this->authorize('delete', $property);
+        $property->update([
+           'status' => 'approved',
+            'approved_by' => Auth::id(),
+            'approved_at' => now(),
+            'rejection_reason' => null,
+        ]);
 
-        foreach ($property->images as $image) {
-            if (Storage::disk('public')->exists('properties/' . $image->image)) {
-                Storage::disk('public')->delete('properties/' . $image->image);
-            }
-            $image->delete();
-        }
+        Notification::create([
+            'user_id' => $property->user_id,
+            'type' => 'property',
+            'title' => 'Property Approved 🎉',
+            'body' => 'Your property "' . $property->title . '" is now live.',
+            'property_id' => $property->id,
+        ]);
 
-        $property->delete();
-
-        return redirect()->back()
-            ->with('success', 'Property deleted successfully');
+        return back()->with('success', 'Approved successfully');
     }
 
+    // =========================
+    // REJECT
+    // =========================
+    public function reject(Request $request, Property $property)
+    {
+        $request->validate([
+            'reason' => 'required|string|max:500'
+        ]);
 
+        $property->update([
+          'status' => 'rejected',
+            'rejection_reason' => $request->reason,
+            'approved_by' => Auth::id(),
+            'approved_at' => now(),
+        ]);
+
+        Notification::create([
+            'user_id' => $property->user_id,
+            'type' => 'property',
+            'title' => 'Property Rejected ❌',
+            'body' => 'Reason: ' . $request->reason,
+            'property_id' => $property->id,
+        ]);
+
+        return back()->with('success', 'Rejected successfully');
+    }
+
+    // =========================
+    // DELETE IMAGE
+    // =========================
     public function deleteImage($id)
     {
         $image = \App\Models\PropertyImage::findOrFail($id);
-
-        $this->authorize('delete', $image->property);
 
         if (Storage::disk('public')->exists('properties/' . $image->image)) {
             Storage::disk('public')->delete('properties/' . $image->image);
@@ -120,37 +170,45 @@ class PropertyController extends Controller
 
         $image->delete();
 
-        return back()->with('success', 'Image deleted successfully');
+        return back()->with('success', 'Image deleted');
     }
+public function destroy($id)
+{
+    $property = Property::findOrFail($id);
+    $property->delete();
 
-
+    return redirect()->route('properties.index')
+        ->with('success', 'با موفقیت حذف شد');
+}
+    // =========================
+    // TRASH
+    // =========================
     public function trash()
     {
-        $properties = Property::onlyTrashed()->paginate(5);
-        return view('admin.properties.trash', compact('properties'));
+        return view('admin.properties.trash', [
+            'properties' => Property::onlyTrashed()->paginate(10)
+        ]);
     }
-
 
     public function restore($id)
     {
         Property::onlyTrashed()->findOrFail($id)->restore();
-        return back()->with('success', 'Property restored successfully');
+        return back()->with('success', 'Restored');
     }
-
 
     public function forceDelete($id)
     {
         $property = Property::onlyTrashed()->findOrFail($id);
 
-        $this->authorize('delete', $property);
+        DB::transaction(function () use ($property) {
 
-        foreach ($property->images as $image) {
-            Storage::disk('public')->delete('properties/' . $image->image);
-        }
+            foreach ($property->images as $img) {
+                Storage::disk('public')->delete('properties/' . $img->image);
+            }
 
-        $property->forceDelete();
+            $property->forceDelete();
+        });
 
-        return back()->with('success', 'Property permanently deleted');
+        return back()->with('success', 'Permanently deleted');
     }
-
 }

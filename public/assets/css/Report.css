@@ -1,46 +1,110 @@
 /* ===============================
-   REPORT PAGE - ADMIN PANEL
-   REMS
+   REPORT PAGE - FINAL PRODUCTION
 ================================ */
 
-/* General */
+/* ===============================
+   GLOBAL
+================================ */
 body {
   background: #f4f8f7;
-  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-family: "Segoe UI", "Poppins", Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/* Header */
+/* ===============================
+   HEADER (ADVANCED SKEW)
+================================ */
+
 .admin-header {
-  background: linear-gradient(90deg, #0d6efd, #20c997);
-  color: #fff;
-  padding: 20px 30px;
+  background: linear-gradient(135deg, #3b89ff, #64e2a9);
+  color: white;
+  padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.admin-header a.btn {
+  min-width: 120px;
 }
 
-.admin-header h4 {
-  margin: 0;
+/* لایه روشن */
+
+/* خط برش */
+.cut-line {
+  position: absolute;
+  bottom: -10px;
+  left: -50px;
+  width: 130%;
+  height: 10px;
+  background: rgba(0,0,0,0.25);
+  transform: skewX(-25deg);
+}
+
+/* محتوا بالا بیاد */
+.admin-header > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===============================
+   LOGO + TEXT
+================================ */
+
+.dashboard-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #20c997;
+  background-color: #fff;
+}
+
+.brand-text {
+  font-size: 20px;
   font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
 }
 
-.admin-header small {
-  opacity: 0.9;
+/* ===============================
+   RESPONSIVE HEADER
+================================ */
+
+@media (max-width: 768px) {
+
+  .admin-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    padding: 35px 20px;
+  }
+
+  .admin-header .btn {
+    width: 100%;
+  }
+
 }
 
-/* Cards */
+/* ===============================
+   STAT CARDS
+================================ */
+
 .stat-card {
   background: #fff;
   border-radius: 16px;
   padding: 25px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  transition: transform .3s ease, box-shadow .3s ease;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .stat-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px) scale(1.02);
   box-shadow: 0 16px 35px rgba(0,0,0,0.15);
 }
 
@@ -49,34 +113,37 @@ body {
   margin-bottom: 10px;
 }
 
-.stat-card h5 {
-  margin-top: 10px;
-  font-weight: 600;
+.stat-card h2 {
+  font-size: 28px;
+  font-weight: 700;
 }
 
 .stat-card p {
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 15px;
+  color: #6c757d;
   margin: 0;
 }
 
 /* Colors */
 .stat-card.blue i,
-.stat-card.blue p {
+.stat-card.blue h2 {
   color: #0d6efd;
 }
 
 .stat-card.green i,
-.stat-card.green p {
+.stat-card.green h2 {
   color: #198754;
 }
 
 .stat-card.red i,
-.stat-card.red p {
+.stat-card.red h2 {
   color: #dc3545;
 }
 
-/* Report Table */
+/* ===============================
+   REPORT TABLE
+================================ */
+
 .property-card {
   background: #fff;
   border-radius: 16px;
@@ -95,22 +162,36 @@ body {
   font-weight: 700;
 }
 
-/* footer*/
-/* =========================
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead {
+  background: #f1f5f9;
+}
+
+.table tbody tr {
+  transition: 0.2s;
+}
+
+.table tbody tr:hover {
+  background: #f9fbfc;
+}
+
+/* ===============================
    FOOTER
-========================= */
-/* =========================
-   FOOTER (Blue - Green)
-========================= */
+================================ */
 
 .dashboard-footer {
   background: linear-gradient(90deg, #0d6efd, #20c997);
   color: #eafaf1;
   padding: 50px 0 20px;
+  border-radius: 20px 20px 0 0;
 }
 
 .footer-title {
-  color: #ffffff;
+  color: #fff;
   font-weight: 600;
   margin-bottom: 15px;
 }
@@ -120,16 +201,14 @@ body {
   line-height: 1.7;
 }
 
-
 .footer-links a {
   color: #eafaf1;
   text-decoration: none;
   transition: 0.3s;
 }
 
-
 .footer-links a:hover {
-  color: #ffffff;
+  color: #fff;
   text-decoration: underline;
 }
 
@@ -137,35 +216,63 @@ body {
   border-color: rgba(255,255,255,0.25);
 }
 
-
 .footer-bottom {
   font-size: 13px;
   color: #d1fae5;
 }
 
-.dashboard-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #20c997;
-  background-color: white;
+/* ===============================
+   TOAST
+================================ */
+
+.custom-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #212529;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.3s;
+  z-index: 9999;
+}
+
+.custom-toast.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 
+/* =========================
+   BACK DASHBOARD BUTTON
+========================= */
 
-/* REal estate  */
-.brand-text {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+.dashboard-back-btn {
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(6px);
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
 
-  /* Gradient text */
-  background: linear-gradient(90deg, #000000, #000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.dashboard-back-btn:hover {
+  background: #ffffff;
+  color: #3b89ff;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
 
-  font-family: "Segoe UI", "Poppins", sans-serif;
-  margin-left: 10px;
+.dashboard-back-btn i {
+  margin-right: 5px;
+}
+
+/* RTL icon spacing fix */
+html[dir="rtl"] .dashboard-back-btn i {
+  margin-right: 0;
+  margin-left: 5px;
 }

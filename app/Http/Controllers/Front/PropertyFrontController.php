@@ -3,39 +3,121 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Property;
+use App\Models\PropertyImage;
+use App\Models\Notification;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+use App\Services\PropertySearchService;
+use App\Http\Requests\StorePropertyRequest;
+
 
 class PropertyFrontController extends Controller
 {
     // ===============================
-    // 1️⃣ Show all properties (User page)
+    // USER PANEL
     // ===============================
-    public function index()
-    {
-        $properties = Property::latest()->get();
-        return view('user', compact('properties'));
-    }
 
-    // ===============================
-    // 2️⃣ Show single property (View page)
-    // ===============================
-    public function show($id)
-    {
-        $property = Property::with('images')->findOrFail($id);
-        return view('view', compact('property'));
-    }
 
-    // ===============================
-    // 3️⃣ Search properties (Dashboard)
-    // ===============================
- public function search(Request $request)
+public function index(Request $request)
 {
-    $query = Property::query();
+    $query = Property::with('images')
+        ->where('user_id', Auth::id());
 
-    $query->where('status', 'active');
+    // 🔍 فیلتر location
+ if ($request->filled('location')) {
+    $query->where('location', 'like', '%' . $request->location . '%');
+}
 
+if ($request->filled('type')) {
+    $query->where('type', $request->type);
+}
+
+    // 👇 این خیلی مهمه (pagination حفظ میشه)
+    $properties = $query->latest()->paginate(9);
+
+    return view('user', compact('properties'));
+}
+
+    // ===============================
+    // STORE PROPERTY
+    // ===============================
+public function store(StorePropertyRequest $request)
+{
+    try {
+
+        // ✅ 1. گرفتن دیتا
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+        $data['approval_status'] = 'pending'; // 👈 مهم
+
+        // ✅ 2. ذخیره property
+        $property = Property::create($data);
+
+        // ✅ 3. آپلود تصاویر
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $img) {
+
+                $name = Str::uuid() . '.' . $img->extension();
+                $img->storeAs('properties', $name, 'public');
+
+                $property->images()->create([
+                    'image' => $name
+                ]);
+            }
+        }
+
+        // ✅ 4. ارسال نوتیفیکیشن به ادمین‌ها
+        $admins = User::admins()->get();
+
+        foreach ($admins as $admin) {
+            Notification::create([
+                'user_id' => $admin->id,
+                'type' => 'property',
+                'title' => 'New Property Submitted',
+                'body' => Auth::user()->name . ' added a new property',
+                'property_id' => $property->id,
+                'is_read' => false,
+            ]);
+        }
+
+        // ✅ 5. برگشت با پیام موفقیت
+        return back()->with('success', __('property.submitted'));
+
+    } catch (\Exception $e) {
+
+        \Log::error('Property store error: ' . $e->getMessage());
+
+        return back()->with('error', 'Something went wrong');
+    }
+}
+
+    // ===============================
+    // SHOW PROPERTY
+    // ===============================
+public function show($id)
+{
+    $property = Property::with('images')->findOrFail($id);
+
+    return view('view', compact('property'));
+}
+
+    // ===============================
+    // DASHBOARD (MAIN)
+    // ===============================
+public function dashboard(Request $request)
+{
+    $query = Property::with('images');
+
+    // ❌ این دو خط را حذف کن
+    // $query->where('approval_status', PropertyStatus::APPROVED)
+    //       ->where('status', 'active');
+
+    // optional filters (search box)
     if ($request->filled('location')) {
         $query->where('location', 'like', '%' . $request->location . '%');
     }
@@ -48,90 +130,163 @@ class PropertyFrontController extends Controller
         $query->where('type', $request->type);
     }
 
-    $properties = $query->latest()->get();
+    $properties = $query->latest()->paginate(9)->withQueryString();
 
-    // اگر user لاگین است
-    if (auth()->check() && auth()->user()->role == 'user') {
-        return view('user', compact('properties'));
-    }
-
-    // اگر عمومی
     return view('dashboard', [
         'properties' => $properties,
-        'totalProperties' => Property::count(),
-        'forSale' => Property::where('purpose','sale')->count(),
-        'forRent' => Property::where('purpose','rent')->count(),
-        'customers' => User::count()
+
+        'totalProperties' => Property::count(), // 👈 همه
+
+        'forSale' => Property::where('purpose', 'sale')->count(),
+
+        'forRent' => Property::where('purpose', 'rent')->count(),
+
+        'customers' => User::where('role','user')->count(),
     ]);
 }
 
     // ===============================
-    // 4️⃣ Compare properties
+    // SEARCH
     // ===============================
-/*public function compare(Request $request)
-    {
-        $ids = explode(',', $request->ids);
-        $properties = Property::whereIn('id', $ids)->get();
-        return view('compare', compact('properties'));
-    }*/
-        public function compare(Request $request)
+public function search(Request $request, PropertySearchService $search)
 {
-    if (!$request->has('ids')) {
-        return redirect()->route('user.panel');
-    }
+    $properties = $search->apply($request)
+        ->with('images')
+        ->where('status', 'approved') // ✅ فقط همین
+        ->latest()
+        ->paginate(9)
+        ->withQueryString();
 
-    $ids = explode(',', $request->ids);
+    return view('dashboard', [
+        'properties' => $properties,
 
-    $properties = Property::with('images')
-        ->whereIn('id', $ids)
-        ->get();
+        'totalProperties' => Property::where('status', 'approved')->count(),
 
-    return view('compare', compact('properties'));
+        'forSale' => Property::where('purpose', 'sale')
+            ->where('status', 'approved')
+            ->count(),
+
+        'forRent' => Property::where('purpose', 'rent')
+            ->where('status', 'approved')
+            ->count(),
+
+        'customers' => User::where('role','user')->count(),
+    ]);
 }
-
     // ===============================
-    // 5️⃣ Dashboard (Default + Search)
+    // COMPARE
     // ===============================
-    public function dashboard(Request $request)
+    public function compare(Request $request)
     {
-        //dd($request->all());
-        $query = Property::query();
+        $ids = explode(',', $request->ids ?? '');
 
-        // فقط active
-        $query->where('status', 'active');
+        $properties = Property::with('images')
+            ->whereIn('id', $ids)
+            ->where('status', 'approved')
+            ->get();
 
-        // location
-        if ($request->filled('location')) {
-            $query->where('location', 'like', '%' . $request->location . '%');
-        }
+        return view('compare', compact('properties'));
+    }
 
-        // purpose: sale / rent
-        if ($request->filled('purpose')) {
-            $query->where('purpose', $request->purpose);
-        }
+    // ===============================
+    // UPDATE
+    // ===============================
+    public function update(Request $request, $id)
+    {
+        $property = Property::where('user_id', auth()->id())
+            ->findOrFail($id);
 
-        // type: house / villa / apartment
-        if ($request->filled('type')) {
-            $query->where('type', $request->type);
-        }
-
-        //$properties = $query->latest()->get();
-        $properties = $query->latest()->paginate(6);
-        return view('dashboard', [
-            'properties' => $properties,
-            'totalProperties' => Property::count(),
-            'forSale' => Property::where('purpose','sale')->count(),
-            'forRent' => Property::where('purpose','rent')->count(),
-            'customers' => User::count()
+        $property->update([
+            ...$request->only([
+                'title','description','location','price',
+                'bedrooms','bathrooms','area','type','purpose'
+            ]),
+          'status' => 'pending'
         ]);
+
+        // upload images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $img) {
+
+                $name = Str::uuid() . '.' . $img->extension();
+                $img->storeAs('properties', $name, 'public');
+
+                $property->images()->create([
+                    'image' => $name
+                ]);
+            }
+        }
+
+        // notify admins
+     $admins = User::admins()->get();
+
+        foreach ($admins as $admin) {
+            Notification::create([
+                'user_id' => $admin->id,
+                'type' => 'property',
+                'title' => __('notifications.property_updated'),
+                'body' => Auth::user()->name . ' updated a property',
+                'property_id' => $property->id,
+            ]);
+        }
+
+        return back()->with('success', __('property.updated_pending'));
     }
 
     // ===============================
-    // 6️⃣ User properties (Front)
+    // DELETE PROPERTY
     // ===============================
-    public function properties()
+    public function destroy($id)
     {
-        $properties = Property::latest()->get();
-        return view('user', compact('properties'));
+        $property = Property::where('user_id', auth()->id())
+            ->findOrFail($id);
+
+        foreach ($property->images as $img) {
+            Storage::disk('public')->delete('properties/' . $img->image);
+        }
+
+        $property->delete();
+
+        return back()->with('success', __('property.deleted'));
     }
+
+    // ===============================
+    // DELETE IMAGE
+    // ===============================
+    public function deleteImage($id)
+    {
+        $image = PropertyImage::findOrFail($id);
+
+        Storage::disk('public')->delete('properties/'.$image->image);
+        $image->delete();
+
+        return response()->json(['success' => true]);
+    }
+
+    // ===============================
+    // SET MAIN IMAGE
+    // ===============================
+    public function setMainImage($id)
+    {
+        $image = PropertyImage::findOrFail($id);
+
+        $image->property->images()->update(['is_main' => false]);
+        $image->update(['is_main' => true]);
+
+        return response()->json(['success' => true]);
+    }
+public function properties()
+{
+    $properties = Property::where('status', 'approved')
+        ->latest()
+        ->paginate(9);
+
+    return view('user', [
+        'properties' => $properties,
+        'totalProperties' => Property::where('status', 'approved')->count(),
+        'forSale' => Property::where('purpose', 'sale')->where('status', 'approved')->count(),
+        'forRent' => Property::where('purpose', 'rent')->where('status', 'approved')->count(),
+        'customers' => \App\Models\User::where('role','user')->count(),
+    ]);
+}
 }

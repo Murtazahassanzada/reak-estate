@@ -1,75 +1,138 @@
 @extends('layouts.app')
-@section('title','Contact')
-@section('content')
+
+@section('title', __('contact.meta.title'))
+
 @push('styles')
+
+@if(app()->getLocale() == 'fa')
+<link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.rtl.min.css') }}">
+@else
+<link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+@endif
+
 <link rel="stylesheet" href="{{ asset('assets/css/Contact.css') }}">
+
+<style>
+body[dir="rtl"] { text-align: right; }
+</style>
+
 @endpush
 
 
+@section('content')
 
-<!-- Contact Section -->
 <section class="contact-section">
   <div class="container">
-    <div class="row g-4">
+    <div class="row g-4 align-items-stretch">
 
-      <!-- Contact Info -->
+      <!-- INFO -->
       <div class="col-lg-5">
-        <div class="contact-info">
-          <h2>Get in Touch</h2>
-          <p>Feel free to contact us for any questions or property inquiries.</p>
+        <div class="contact-info h-100">
+
+          <h2 class="fw-bold">{{ __('contact.info.title') }}</h2>
+          <p>{{ __('contact.info.subtitle') }}</p>
 
           <div class="info-item">
             <i class="fas fa-map-marker-alt"></i>
-            <span>Kabul, Afghanistan</span>
+            <span>{{ __('contact.info.address') }}</span>
           </div>
 
           <div class="info-item">
             <i class="fas fa-phone"></i>
-            <span>+93 700 000 000</span>
+            <span>{{ __('contact.info.phone') }}</span>
           </div>
 
           <div class="info-item">
             <i class="fas fa-envelope"></i>
-            <span>info@realestate.com</span>
+            <span>{{ __('contact.info.email') }}</span>
           </div>
 
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
         </div>
       </div>
 
-      <!-- Contact Form -->
+      <!-- FORM -->
       <div class="col-lg-7">
-        <div class="contact-form">
-          <h3>Send a Message</h3>
+        <div class="contact-form h-100">
 
-          <form id="contactForm">
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <input type="text" class="form-control" placeholder="Your Name" required>
-              </div>
-              <div class="col-md-6 mb-3">
-                <input type="email" class="form-control" placeholder="Your Email" required>
-              </div>
-            </div>
+          <h3 class="fw-bold">{{ __('contact.form.title') }}</h3>
 
-            <div class="mb-3">
-              <input type="text" class="form-control" placeholder="Subject">
-            </div>
+          {{-- SUCCESS --}}
+        @if(session('success'))
+<div class="alert alert-success text-center shadow-sm">
+    {{ session('success') }}
+</div>
+@endif
 
-            <div class="mb-3">
-              <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
-            </div>
+@if(session('error'))
+<div class="alert alert-danger text-center shadow-sm">
+    {{ session('error') }}
+</div>
+@endif
 
-            <button type="submit" class="btn btn-primary w-100">Send Message</button>
-          </form>
+          {{-- ERROR --}}
+          @if ($errors->any())
+          <div class="alert alert-danger">
+            {{ __('contact.form.error') }}
+          </div>
+          @endif
 
-          <p id="successMsg" class="text-success mt-3 d-none">
-            Message sent successfully ✔️
-          </p>
+     <form id="contactForm" method="POST" action="{{ route('contact.submit') }}">
+@csrf
+
+<div class="row">
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <input type="text" name="name" placeholder=" "
+             value="{{ old('name') }}"
+             class="form-control @error('name') is-invalid @enderror" required>
+      <label>{{ __('contact.form.name') }}</label>
+      @error('name')
+      <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <input type="email" name="email" placeholder=" "
+             value="{{ old('email') }}"
+             class="form-control @error('email') is-invalid @enderror" required>
+      <label>{{ __('contact.form.email') }}</label>
+      @error('email')
+      <div class="invalid-feedback">{{ $message }}</div>
+      @enderror
+    </div>
+  </div>
+
+</div>
+
+<div class="form-group mt-3">
+  <input type="text" name="subject" placeholder=" "
+         value="{{ old('subject') }}"
+         class="form-control">
+  <label>{{ __('contact.form.subject') }}</label>
+</div>
+
+<div class="form-group mt-3">
+  <textarea name="message" rows="5" placeholder=" "
+            class="form-control @error('message') is-invalid @enderror" required>{{ old('message') }}</textarea>
+  <label>{{ __('contact.form.message') }}</label>
+  @error('message')
+  <div class="invalid-feedback">{{ $message }}</div>
+  @enderror
+</div>
+
+<button type="submit"
+        class="contact-btn w-100 mt-3"
+        data-loading="{{ __('contact.form.sending') }}">
+    <span class="btn-text">
+        {{ __('contact.form.button') }}
+    </span>
+</button>
+
+</form>
+
         </div>
       </div>
 
@@ -77,9 +140,10 @@
   </div>
 </section>
 
-@push('scripts')
-<script src="{{ asset('assets/js/Contact.js') }}"></script>
-@endpush
-
-
 @endsection
+
+
+@push('scripts')
+<script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/contact.js') }}"></script>
+@endpush

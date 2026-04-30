@@ -1,61 +1,90 @@
-/* LOGIN PAGE */
-
 body, html {
   height: 100%;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-
+  font-family: 'Poppins', sans-serif;
 }
 
-
+/* BACKGROUND */
 .login-page {
   background: url('../image/Bg.jpg') no-repeat center center/cover;
-  min-height: 100vh;   /* 🔥 مهم — به جای height */
+  min-height: 100vh;
 }
 
+/* DARK OVERLAY */
 .login-overlay {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(0.50px);
+  background: rgba(0,0,0,0.45);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* CARD */
 .login-card {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
   padding: 40px;
-  border-radius: 16px;
+  border-radius: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   color: #fff;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  animation: fadeInUp 0.6s ease;
 }
 
+/* TITLE */
 .login-card h2 {
   font-weight: bold;
 }
 
+/* INPUT */
 .login-card input {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255,255,255,0.9);
   border: none;
-  padding: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
+.login-card input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0d6efd;
+}
+
+/* BUTTON */
 .login-btn {
-  background: linear-gradient(90deg, #0d6efd, #0dcaf0);
-  color: #fff;
-  padding: 12px;
-  border-radius: 10px;
+  background: linear-gradient(90deg,#0d6efd,#20c997);
   border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 .login-btn:hover {
+  transform: translateY(-2px);
   opacity: 0.9;
 }
 
+/* LINKS */
 .login-card a {
   color: #fff;
-  text-decoration: underline;
   font-size: 14px;
+  opacity: 0.8;
+}
+
+.login-card a:hover {
+  opacity: 1;
+}
+
+/* ANIMATION */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

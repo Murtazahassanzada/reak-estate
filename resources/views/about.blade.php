@@ -1,105 +1,96 @@
 @extends('layouts.app')
-@section('title','About')
-@section('content')
+@section('title', __('about.meta.title'))
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/About.css') }}">
 @endpush
 
+@section('content')
 
-
-<!-- Hero Section -->
-<section class="hero-section text-white text-center">
+<!-- HERO -->
+<section class="hero-section position-relative text-white text-center d-flex align-items-center">
+    <div class="hero-overlay"></div>
   <div class="container">
-    <h1 class="fw-bold">About REAL ESTATE</h1>
-    <p class="lead">A Smart Real Estate Management System</p>
+    <h1 class="fw-bold display-5">{{ __('about.hero.title') }}</h1>
+    <p class="lead">{{ __('about.hero.subtitle') }}</p>
   </div>
 </section>
 
-<!-- About Content -->
+<!-- ABOUT -->
 <section class="py-5">
   <div class="container">
-    <div class="row align-items-center">
+    <div class="row align-items-center g-4">
 
-      <div class="col-md-6">
-        <h2 class="fw-bold mb-3">Who We Are</h2>
+      <div class="col-lg-6">
+        <h2 class="fw-bold mb-3">{{ __('about.about_section.title') }}</h2>
         <p>
-          REMS (Real Estate Management System) is a modern web-based platform
-          designed to simplify property management processes.
-          The system helps administrators manage properties efficiently,
-          while users can explore, search, and compare real estate listings.
+          {{ __('about.about_section.p1') }}
         </p>
         <p>
-          This project is developed using modern web technologies
-          with a focus on usability, security, and scalability.
+          {{ __('about.about_section.p2') }}
+        </p>
+        <p>
+          {{ __('about.about_section.p3') }}
         </p>
       </div>
 
-      <div class="col-md-6 text-center">
-        <i class="bi bi-buildings about-icon"></i>
+      <div class="col-lg-6 text-center">
+        <div class="about-icon-wrapper">
+          <i class="bi bi-buildings about-icon"></i>
+        </div>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- Features -->
+<!-- FEATURES -->
 <section class="bg-light py-5">
   <div class="container">
-    <h2 class="text-center fw-bold mb-5">System Features</h2>
+    <h2 class="text-center fw-bold mb-5">{{ __('about.features.title') }}</h2>
 
     <div class="row g-4">
-      <div class="col-md-4">
-        <div class="feature-card">
+
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-card h-100">
           <i class="bi bi-house-check"></i>
-          <h5>Property Management</h5>
-          <p>Add, edit, delete, and manage real estate properties easily.</p>
+          <h5>{{ __('about.features.property.title') }}</h5>
+          <p>{{ __('about.features.property.desc') }}</p>
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="feature-card">
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-card h-100">
           <i class="bi bi-search"></i>
-          <h5>Advanced Search</h5>
-          <p>Search properties using multiple filters and criteria.</p>
+          <h5>{{ __('about.features.search.title') }}</h5>
+          <p>{{ __('about.features.search.desc') }}</p>
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="feature-card">
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-card h-100">
           <i class="bi bi-bar-chart"></i>
-          <h5>Comparison System</h5>
-          <p>Compare properties side by side for better decision making.</p>
+          <h5>{{ __('about.features.compare.title') }}</h5>
+          <p>{{ __('about.features.compare.desc') }}</p>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- Mission -->
+<!-- MISSION -->
 <section class="py-5">
   <div class="container text-center">
-    <h2 class="fw-bold mb-3">Our Mission</h2>
+    <h2 class="fw-bold mb-3">{{ __('about.mission.title') }}</h2>
     <p class="mission-text">
-      Our mission is to provide a reliable, secure, and user-friendly
-      real estate management solution that improves efficiency and transparency
-      in property management systems.
+      {{ __('about.mission.text') }}
     </p>
   </div>
 </section>
 
-<!-- Footer -->
-<!--<footer class="footer text-white text-center py-3">
-  <p class="mb-0">© 2026 REMS | Real Estate Management System</p>
-</footer>-->
-<!---->
-<!-- FOOTER -->
+@endsection
 
 @push('scripts')
 <script src="{{ asset('assets/js/About.js') }}"></script>
 @endpush
-
-<script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-
-@endsection

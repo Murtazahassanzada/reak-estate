@@ -1,99 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  background-color: #f4fdfb;
+    background: #f4f6fb;
+    font-family: system-ui, -apple-system, sans-serif;
 }
 
-.sidebar {
-  background: linear-gradient(180deg,  #0d6efd, #20c997);
-  min-height: calc(100vh - footerHeight);
-  padding-top: 20px;
-}
-
-.sidebar .nav-link {
-  color: #fff;
-  padding: 12px 20px;
-}
-
-.sidebar .nav-link:hover,
-.sidebar .nav-link.active {
-  background-color: rgba(255,255,255,0.2);
-}
-
-
-.admin-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-}
-
-.stat-card {
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-.dashboard-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #20c997;
-  background-color: white;
-}
-
-
-.brand-text {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-
-  /* Gradient text */
-  background: linear-gradient(90deg, #000000, #000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-family: "Segoe UI", "Poppins", sans-serif;
-  margin-left: 10px;
-}
-/*   FOOTER (Blue - Green)
+/* =========================
+   LAYOUT FIX (IMPORTANT)
 ========================= */
-
-.dashboard-footer {
-  background: linear-gradient(90deg, #0d6efd, #20c997);
-  color: #eafaf1;
-  padding: 50px 0 20px;
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
 }
 
-.footer-title {
-  color: #ffffff;
-  font-weight: 600;
-  margin-bottom: 15px;
+/* =========================
+   SIDEBAR (PRO LEVEL FIX)
+========================= */
+.admin-sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #0f172a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 18px rgba(0,0,0,0.15);
 }
 
-.footer-text {
-  color: #eafaf1;
-  line-height: 1.7;
+/* ================= HEADER ================= */
+.sidebar-header {
+    padding: 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-
-.footer-links a {
-  color: #eafaf1;
-  text-decoration: none;
-  transition: 0.3s;
+.sidebar-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
 }
 
-
-.footer-links a:hover {
-  color: #ffffff;
-  text-decoration: underline;
+/* ================= MENU ================= */
+.sidebar-menu {
+    list-style: none;
+    padding: 15px;
+    margin: 0;
+    flex: 1;
 }
 
-.footer-divider {
-  border-color: rgba(255,255,255,0.25);
+.sidebar-menu li {
+    margin-bottom: 6px;
 }
 
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
 
-.footer-bottom {
-  font-size: 13px;
-  color: #d1fae5;
+.sidebar-menu a i {
+    width: 20px;
+    text-align: center;
+}
+
+/* hover */
+.sidebar-menu a:hover {
+    background: #1e293b;
+    color: #fff;
+    transform: translateX(4px);
+}
+
+/* active menu */
+.sidebar-menu a.active {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* ================= TEXT ================= */
+.sidebar-header h6 {
+    color: #e2e8f0;
+    font-weight: 600;
+}
+
+.sidebar-header small {
+    color: #94a3b8;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+    .admin-sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* =========================
+   CONTENT FIX (IMPORTANT)
+========================= */
+.admin-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 25px;
+}
+
+/* =========================
+   STAT CARDS (ENTERPRISE STYLE)
+========================= */
+.stat-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    transition: 0.25s ease;
+    min-height: 110px;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card h3 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #6b7280;
+}
+
+/* =========================
+   TABLE (MODERN UPGRADE)
+========================= */
+.card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    background: #fff !important;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 16px;
+    font-weight: 600;
+}
+
+.table thead {
+    background: #f8fafc;
+}
+
+.table th {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 600;
+    padding: 14px;
+}
+
+.table td {
+    padding: 16px;
+}
+
+.table tbody tr {
+    transition: 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: #f1f5f9;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+    border-radius: 8px;
+    font-size: 13px;
+    padding: 6px 12px;
+}
+
+.btn-primary {
+    background: #2563eb;
+    border: none;
+}
+
+.btn-danger {
+    background: #ef4444;
+    border: none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 992px) {
+
+    .admin-sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .admin-content {
+        margin-left: 0;
+        padding: 15px;
+    }
 }

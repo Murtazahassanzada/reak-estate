@@ -12,16 +12,20 @@ class ReportController extends Controller
     {
         // کارت‌ها
         $totalProperties = Property::count();
-        $activeProperties = Property::where('status', 'Active')->count(); // حروف بزرگ با جدول مطابقت داشته باشد
+         $activeProperties = Property::where('status', 'approved')->count();
+        //$activeProperties = Property::where('status', 'Active')->count(); // حروف بزرگ با جدول مطابقت داشته باشد
         $deletedProperties = Property::onlyTrashed()->count();
 
         // گزارش ماهانه
-        $monthlyReport = Property::select(
-                DB::raw('MONTH(created_at) as month'),
-                DB::raw('COUNT(*) as added')
-            )
-            ->groupBy('month')
-            ->get();
+     $monthlyReport = Property::withTrashed()
+    ->select(
+        DB::raw('MONTH(created_at) as month'),
+        DB::raw('COUNT(*) as added'),
+        DB::raw('SUM(CASE WHEN deleted_at IS NOT NULL THEN 1 ELSE 0 END) as deleted'),
+        DB::raw('SUM(CASE WHEN status = "Active" AND deleted_at IS NULL THEN 1 ELSE 0 END) as active')
+    )
+    ->groupBy('month')
+    ->get();
 
         return view('report', compact(
             'totalProperties',

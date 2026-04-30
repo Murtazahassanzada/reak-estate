@@ -5,34 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!loginForm) return;
 
   loginForm.addEventListener("submit", function () {
-    // ❌ preventDefault را حذف کردیم
-    // ✅ حالا فرم به Laravel ارسال می‌شود
+    console.log("Form submitted...");
+    // ❌ preventDefault نداریم → فرم به Laravel می‌رود
   });
 
 });
-
-    // Admin credentials (frontend demo)
-    /*if (username === "admin" && password === "12345") {
-
-      // login state
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", "admin");
-
-      // ✅ redirect ONLY to admin
-      window.location.href = "Admin.html";
-
-    } else {
-      alert("Invalid username or password");
-    }*/
-/*if (username === "admin" && password === "1234") {
-  localStorage.setItem("isLoggedIn", "true");
-  localStorage.setItem("role", "admin");
-  window.location.href = "/admin";
-}*/
-/*else {
-  localStorage.setItem("isLoggedIn", "true");
-  localStorage.setItem("role", "user");
-  window.location.href = "/user";
-}*/
-
-
