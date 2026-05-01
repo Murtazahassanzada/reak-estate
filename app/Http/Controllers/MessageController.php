@@ -32,10 +32,10 @@ class MessageController extends Controller
         ]);
 
         // 🔔 ساخت notification (SAFE)
-Notification::create([
+$notification = Notification::create([
     'user_id' => $property->user_id,
-    'type' => 'message',
-    'title' => 'New Message',
+    'type' => 'contact',
+    'title' => 'New Contact Message',
     'body' => $request->message,
     'property_id' => $property->id,
     'is_read' => false
@@ -49,4 +49,39 @@ event(new NotificationCreated($notification, $unread));
 
         return back()->with('success','Message sent successfully');
     }
+public function reply(Request $request, $notificationId)
+{
+    $request->validate([
+        'message' => 'required|min:2'
+    ]);
+
+    $notification = Notification::findOrFail($notificationId);
+
+    $oldMessage = Message::where('property_id', $notification->property_id)
+        ->where('sender_id', '!=', auth()->id())
+        ->latest()
+        ->first();
+
+    if (!$oldMessage) {
+        return back()->with('error', 'Message not found');
+    }
+dd($oldMessage);
+    Message::create([
+        'sender_id' => auth()->id(),
+        'receiver_id' => $oldMessage->sender_id,
+        'property_id' => $oldMessage->property_id,
+        'message' => $request->message,
+    ]);
+
+    Notification::create([
+        'user_id' => $oldMessage->sender_id,
+        'type' => 'reply',
+        'title' => 'Admin Reply',
+        'body' => auth()->user()->name . ': ' . $request->message,
+        'property_id' => $oldMessage->property_id,
+        'is_read' => false,
+    ]);
+
+    return back()->with('success', 'Reply sent');
+}
 }

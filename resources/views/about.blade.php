@@ -88,7 +88,77 @@
     </p>
   </div>
 </section>
+<!-- STATISTICS -->
+<!-- STATISTICS -->
+<section class="py-5 bg-light">
+  <div class="container">
 
+    <div class="row g-4 text-center">
+
+      <!-- PROPERTIES -->
+      <div class="col-md-3">
+        <div class="stat-card">
+
+          <div class="stat-number">
+            {{ number_format($stats['properties']) }}+
+          </div>
+
+          <div class="stat-label">
+            {{ __('about.stats.properties') }}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CUSTOMERS -->
+      <div class="col-md-3">
+        <div class="stat-card">
+
+          <div class="stat-number">
+            {{ number_format($stats['customers']) }}+
+          </div>
+
+          <div class="stat-label">
+            {{ __('about.stats.customers') }}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SUPPORT -->
+      <div class="col-md-3">
+        <div class="stat-card">
+
+          <div class="stat-number">
+            24/7
+          </div>
+
+          <div class="stat-label">
+            {{ __('about.stats.support') }}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- AGENTS -->
+      <div class="col-md-3">
+        <div class="stat-card">
+
+          <div class="stat-number">
+            {{ number_format($stats['agents']) }}+
+          </div>
+
+          <div class="stat-label">
+            {{ __('about.stats.agents') }}
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 @endsection
 
 @push('scripts')

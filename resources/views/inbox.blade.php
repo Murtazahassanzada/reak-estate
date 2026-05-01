@@ -8,11 +8,7 @@
 
     <!-- Tabs -->
     <ul class="nav nav-tabs mb-4">
-        <li class="nav-item">
-            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#messages">
-                📩 Messages
-            </button>
-        </li>
+
         <li class="nav-item">
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#notifications">
                 🔔 Notifications
@@ -23,32 +19,61 @@
     <div class="tab-content">
 
         <!-- ================= MESSAGES ================= -->
-        <div class="tab-pane fade show active" id="messages">
 
-            @forelse($messages ?? [] as $msg)
-                <div class="card mb-3 shadow-sm p-3">
-
-                    <strong>From:</strong> {{ $msg->sender->name ?? '-' }} <br>
-                    <strong>Property:</strong> {{ $msg->property->title ?? '-' }} <br>
-
-                    <p class="mt-2">{{ $msg->message }}</p>
-
-                </div>
-            @empty
-                <p class="text-muted">No messages yet</p>
-            @endforelse
-
-        </div>
 
         <!-- ================= NOTIFICATIONS ================= -->
-        <div class="tab-pane fade" id="notifications" id="notif-box">
+       <div class="tab-pane fade show active" id="notifications">
 
             @forelse($notifications ?? [] as $noti)
                 <div class="card mb-3 p-3 shadow-sm notification-item {{ $noti->is_read ? '' : 'border-primary' }}">
 
                     <strong>{{ $noti->title }}</strong>
 
-                    <p class="mb-2">{{ $noti->body }}</p>
+                   @if($noti->type === 'reply')
+
+    <div class="alert alert-success mb-2">
+        <strong>📩 Admin Reply:</strong><br>
+        {{ $noti->body }}
+    </div>
+
+@elseif($noti->type === 'contact')
+
+    <div class="alert alert-warning mb-2">
+        <strong>📨 New User Message:</strong><br>
+        {{ $noti->body }}
+    </div>
+
+@else
+
+    <p class="mb-2">
+        {{ $noti->body }}
+    </p>
+
+@endif
+@if(
+    strtolower(trim(auth()->user()->role)) === 'admin'
+    &&
+    strtolower(trim($noti->type)) === 'contact'
+)
+
+<form action="{{ route('message.reply', $noti->id) }}"
+      method="POST"
+      class="mt-3">
+
+    @csrf
+
+    <textarea name="message"
+              class="form-control"
+              placeholder="Write reply..."
+              required></textarea>
+
+  <button type="submit" class="btn btn-primary btn-sm mt-2">
+    Reply
+</button>
+
+</form>
+
+@endif
 
                     @if(!$noti->is_read)
                         <button

@@ -3,14 +3,14 @@
 return [
 
     // ========================
-    // Panel
+    // PANEL
     // ========================
     'panel' => [
         'name' => 'User Panel',
     ],
 
     // ========================
-    // Menu
+    // MENU
     // ========================
     'menu' => [
         'dashboard' => 'Dashboard',
@@ -18,33 +18,34 @@ return [
     ],
 
     // ========================
-    // Logout
-    // ========================
-
-    // ========================
-    // Welcome Section
+    // WELCOME
     // ========================
     'welcome' => 'Welcome',
-    'description' => 'You can view, search, and compare properties easily.',
+    'description' => 'Manage your properties, search smarter, and compare easily.',
 
     // ========================
-    // Search
+    // SEARCH
     // ========================
     'search' => [
         'title' => 'Advanced Property Search',
         'location' => 'Location',
         'type' => 'Property Type',
+        'purpose' => 'Purpose',
         'button' => 'Search',
+        'go' => 'Go',
     ],
-'logout' => [
-    'button' => 'Logout',
-    'title' => 'Confirm Logout',
-    'submit' => 'Logout',
-    'question' => 'Are you sure you want to logout?',
-    'cancel' => 'Cancel',
-],
+
     // ========================
-    // Property Types
+    // PURPOSE
+    // ========================
+    'purpose' => [
+        'sale' => 'Sale',
+        'rent' => 'Rent',
+        'mortgage' => 'Mortgage',
+    ],
+
+    // ========================
+    // PROPERTY TYPES
     // ========================
     'types' => [
         'house' => 'House',
@@ -53,19 +54,79 @@ return [
     ],
 
     // ========================
-    // Actions
+    // FAVORITES
     // ========================
-    'actions' => [
-        'compare' => 'Compare',
+    'favorites' => [
+        'title' => 'Saved Properties',
+        'saved' => 'Saved',
+        'favorite' => 'Favorite',
+        'remove' => 'Remove',
+    ],
+
+    // ========================
+    // PROPERTY
+    // ========================
+    'property' => [
+        'add' => 'Add Property',
+        'add_new' => 'Add New Property',
+        'title' => 'Property Title',
+        'description' => 'Description',
+        'location' => 'Location',
+        'price' => 'Price',
+        'type' => 'Property Type',
+        'purpose' => 'Purpose',
+        'bedrooms' => 'Bedrooms',
+        'bathrooms' => 'Bathrooms',
+        'area' => 'Area',
+        'images' => 'Property Images',
+        'publish' => 'Publish Property',
+        'update_images' => 'Update Images',
+        'save_changes' => 'Save Changes',
+        'edit' => 'Edit',
+        'delete' => 'Delete',
         'view' => 'View',
     ],
 
     // ========================
-    // States
+    // STATUS
+    // ========================
+    'status' => [
+        'pending' => 'Under Review',
+        'approved' => 'Live',
+        'rejected' => 'Rejected',
+    ],
+
+    // ========================
+    // DELETE MODAL
+    // ========================
+    'delete' => [
+        'title' => 'Delete Property',
+        'question' => 'Are you sure you want to delete this property?',
+        'confirm' => 'Yes, Delete',
+        'cancel' => 'Cancel',
+    ],
+
+    // ========================
+    // COMPARE
+    // ========================
+    'compare' => [
+        'title' => 'Compare Properties',
+        'button' => 'Compare Now',
+    ],
+
+    // ========================
+    // LOGOUT
+    // ========================
+    'logout' => [
+        'button' => 'Logout',
+        'title' => 'Confirm Logout',
+        'submit' => 'Logout',
+        'question' => 'Are you sure you want to logout?',
+        'cancel' => 'Cancel',
+    ],
+
+    // ========================
+    // EMPTY
     // ========================
     'no_properties' => 'No properties found.',
-    'compare' => [
-    'title' => 'Compare Properties',
-    'button' => 'Compare Now',
-],
 ];

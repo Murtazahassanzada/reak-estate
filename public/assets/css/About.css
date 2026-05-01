@@ -1,183 +1,818 @@
-/* =========================
-   ABOUT PAGE (PRO VERSION)
-========================= */
-
-/* HERO */
-.hero-section {
-    height: 340px;
-    position: relative;
-    background: url('/assets/image/banner.jpg') center/cover no-repeat;
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(15,23,42,0.85),
-        rgba(15,23,42,0.65)
-    );
-}
-
-/* HERO TEXT */
-.hero-section h1 {
-    letter-spacing: -0.5px;
-}
-
-.hero-section p {
-    color: #cbd5e1;
-}
+/* ==============================================
+   ABOUT PAGE – PREMIUM ENTERPRISE UI
+   Modern Real Estate Design
+   ============================================== */
 
 /* =========================
-   ABOUT CONTENT
+   ROOT VARIABLES
 ========================= */
-.about-icon-wrapper {
-    width: 140px;
-    height: 140px;
-    margin: auto;
+:root {
 
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    border-radius: 50%;
+    --primary-dark: #0f172a;
+    --primary: #1d2c50;
+    --primary-light: #304878;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    --accent-gold: #d4a017;
+    --accent-gold-light: #f0c14b;
 
-    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-}
+    --accent-blue: #2563eb;
+    --accent-red: #ef4444;
+    --accent-green: #10b981;
+    --accent-purple: #8b5cf6;
 
-.about-icon {
-    font-size: 60px;
-    color: #c89b3c; /* طلایی */
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+
+    --white: #ffffff;
+
+    --shadow-sm: 0 4px 10px rgba(0,0,0,.05);
+    --shadow-md: 0 12px 24px rgba(0,0,0,.08);
+    --shadow-lg: 0 24px 48px rgba(0,0,0,.14);
+
+    --radius-card: 24px;
+
+    --transition: all .35s ease;
 }
 
 /* =========================
-   TEXT
+   GLOBAL
 ========================= */
-section p {
-    color: #6b7280;
-    line-height: 1.8;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc 0%,
+            #eef2ff 100%
+        );
+
+    color:var(--gray-700);
+
+    overflow-x:hidden;
 }
 
 /* =========================
-   FEATURE CARDS (REAL UI)
+   HERO SECTION
 ========================= */
-.feature-card {
-    background: #ffffff;
-    border-radius: 18px;
-    padding: 30px 25px;
-    text-align: center;
 
-    border: 1px solid #eef2f7;
+.hero-section{
 
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    position:relative;
+
+    height:520px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            rgba(15,23,42,.80),
+            rgba(15,23,42,.76)
+        ),
+        url('/assets/image/banner.jpg');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
 }
 
-/* subtle top line (لوکس) */
-.feature-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, #c89b3c, transparent);
-    opacity: 0;
-    transition: 0.3s;
+.hero-overlay{
+
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(29,44,80,.72),
+            rgba(15,23,42,.82)
+        );
+
+    z-index:1;
 }
 
-/* ICON */
-.feature-card i {
-    font-size: 40px;
-    color: #0f172a;
-    margin-bottom: 15px;
-    display: inline-block;
-    transition: 0.3s ease;
+.hero-content{
+
+    position:relative;
+    z-index:2;
+
+    max-width:850px;
+
+    padding:0 20px;
+
+    animation:fadeUp .9s ease;
 }
 
-/* TITLE */
-.feature-card h5 {
-    font-weight: 700;
-    margin-top: 10px;
-    margin-bottom: 8px;
-    color: #0f172a;
+.hero-section h1{
+
+    font-size:4rem;
+    font-weight:800;
+
+    color:#fff;
+
+    margin-bottom:1rem;
+
+    letter-spacing:-1px;
+
+    text-shadow:
+        0 6px 20px rgba(0,0,0,.45);
 }
 
-/* DESC */
-.feature-card p {
-    font-size: 14px;
-    color: #6b7280;
-}
+.hero-section p{
 
-/* HOVER حرفه‌ای */
-.feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 18px 40px rgba(15,23,42,0.08);
-}
+    font-size:1.2rem;
 
-.feature-card:hover::before {
-    opacity: 1;
-}
+    line-height:1.9;
 
-.feature-card:hover i {
-    transform: scale(1.15);
-    color: #c89b3c; /* طلایی */
+    color:rgba(255,255,255,.92);
+
+    max-width:700px;
+
+    margin:auto;
+
+    text-shadow:
+        0 2px 8px rgba(0,0,0,.3);
 }
 
 /* =========================
-   MISSION
+   SECTIONS
 ========================= */
-.mission-text {
-    max-width: 720px;
-    margin: auto;
-    color: #6b7280;
-    line-height: 1.9;
-    font-size: 15px;
+
+section{
+    padding:90px 0;
 }
 
 /* =========================
-   SECTION SPACING FIX
+   TITLES
 ========================= */
-section {
-    padding-top: 70px;
-    padding-bottom: 70px;
+
+.section-title{
+
+    font-size:2.4rem;
+    font-weight:800;
+
+    color:var(--primary-dark);
+
+    margin-bottom:1rem;
+
+    position:relative;
+
+    display:inline-block;
+}
+
+.section-title::after{
+
+    content:'';
+
+    position:absolute;
+
+    left:0;
+    bottom:-12px;
+
+    width:75px;
+    height:4px;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent-gold),
+            var(--accent-gold-light)
+        );
+}
+
+.section-subtitle{
+
+    color:var(--gray-600);
+
+    max-width:700px;
+
+    margin:auto;
+
+    line-height:1.8;
 }
 
 /* =========================
-   ANIMATION (SMOOTH)
+   ABOUT ICON
 ========================= */
-.feature-card,
-.about-icon-wrapper {
-    opacity: 0;
-    transform: translateY(25px);
-    transition: 0.6s ease;
+
+.about-icon-wrapper{
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary-dark),
+            var(--primary)
+        );
+
+    box-shadow:var(--shadow-lg);
+
+    transition:var(--transition);
+
+    position:relative;
+}
+
+.about-icon-wrapper::before{
+
+    content:'';
+
+    position:absolute;
+
+    inset:-5px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent-gold),
+            transparent
+        );
+
+    opacity:0;
+
+    transition:var(--transition);
+
+    z-index:-1;
+}
+
+.about-icon-wrapper:hover{
+
+    transform:
+        translateY(-10px)
+        scale(1.04);
+}
+
+.about-icon-wrapper:hover::before{
+    opacity:.8;
+}
+
+.about-icon{
+
+    font-size:80px;
+
+    color:var(--accent-gold);
+
+    transition:var(--transition);
+}
+
+.about-icon-wrapper:hover .about-icon{
+
+    color:#fff;
+
+    transform:scale(1.1) rotate(6deg);
+}
+
+/* =========================
+   FEATURE CARDS
+========================= */
+
+.feature-card{
+
+    background:#fff;
+
+    border-radius:var(--radius-card);
+
+    padding:2.2rem;
+
+    text-align:center;
+
+    border:1px solid var(--gray-200);
+
+    transition:var(--transition);
+
+    height:100%;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow-sm);
+}
+
+.feature-card::before{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent-gold),
+            var(--accent-gold-light)
+        );
+
+    transform:scaleX(0);
+
+    transform-origin:left;
+
+    transition:.4s ease;
+}
+
+.feature-card:hover::before{
+    transform:scaleX(1);
+}
+
+.feature-card:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:var(--shadow-lg);
+
+    border-color:transparent;
+}
+
+/* =========================
+   ICONS
+========================= */
+
+.feature-card i{
+
+    width:85px;
+    height:85px;
+
+    margin:auto auto 1.5rem auto;
+
+    border-radius:24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:2.7rem;
+
+    transition:var(--transition);
+
+    background:#eef2ff;
+
+    color:var(--accent-blue);
+}
+
+/* Different icon colors */
+.feature-card:nth-child(2) i{
+    background:#fef2f2;
+    color:var(--accent-red);
+}
+
+.feature-card:nth-child(3) i{
+    background:#ecfdf5;
+    color:var(--accent-green);
+}
+
+.feature-card:nth-child(4) i{
+    background:#f5f3ff;
+    color:var(--accent-purple);
+}
+
+/* Hover colors */
+.feature-card:hover i{
+
+    transform:
+        scale(1.12)
+        rotate(-6deg);
+
+    color:#fff;
+}
+
+.feature-card:nth-child(1):hover i{
+    background:var(--accent-blue);
+}
+
+.feature-card:nth-child(2):hover i{
+    background:var(--accent-red);
+}
+
+.feature-card:nth-child(3):hover i{
+    background:var(--accent-green);
+}
+
+.feature-card:nth-child(4):hover i{
+    background:var(--accent-purple);
+}
+
+/* =========================
+   FEATURE TEXT
+========================= */
+
+.feature-card h5{
+
+    font-size:1.3rem;
+
+    font-weight:800;
+
+    color:var(--gray-800);
+
+    margin-bottom:.9rem;
+}
+
+.feature-card p{
+
+    color:var(--gray-600);
+
+    line-height:1.8;
+
+    font-size:.95rem;
+}
+
+/* =========================
+   MISSION SECTION
+========================= */
+
+.mission-section{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f8fafc
+        );
+
+    border-top:1px solid var(--gray-200);
+    border-bottom:1px solid var(--gray-200);
+}
+
+.mission-text{
+
+    max-width:850px;
+
+    margin:auto;
+
+    text-align:center;
+
+    font-size:1.08rem;
+
+    line-height:2;
+
+    color:var(--gray-700);
+}
+
+.mission-text i{
+
+    display:block;
+
+    font-size:2.2rem;
+
+    margin-bottom:1rem;
+
+    color:var(--accent-gold);
+}
+
+/* =========================
+   VALUE ITEMS
+========================= */
+
+.value-item{
+
+    display:flex;
+
+    gap:1rem;
+
+    align-items:flex-start;
+
+    margin-bottom:2rem;
+}
+
+.value-icon{
+
+    width:62px;
+    height:62px;
+
+    flex-shrink:0;
+
+    border-radius:20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:1.7rem;
+
+    background:#eef2ff;
+
+    color:var(--accent-blue);
+
+    transition:var(--transition);
+}
+
+.value-item:nth-child(2) .value-icon{
+    background:#fef2f2;
+    color:var(--accent-red);
+}
+
+.value-item:nth-child(3) .value-icon{
+    background:#ecfdf5;
+    color:var(--accent-green);
+}
+
+.value-item:hover .value-icon{
+
+    transform:
+        scale(1.1)
+        rotate(-6deg);
+
+    color:#fff;
+}
+
+.value-item:nth-child(1):hover .value-icon{
+    background:var(--accent-blue);
+}
+
+.value-item:nth-child(2):hover .value-icon{
+    background:var(--accent-red);
+}
+
+.value-item:nth-child(3):hover .value-icon{
+    background:var(--accent-green);
+}
+
+.value-content h5{
+
+    font-weight:800;
+
+    color:var(--primary-dark);
+
+    margin-bottom:.5rem;
+}
+
+.value-content p{
+
+    color:var(--gray-600);
+
+    line-height:1.8;
+}
+
+/* =========================
+   STATISTICS
+========================= */
+
+.stat-card{
+
+    background:#fff;
+
+    border-radius:30px;
+
+    padding:2rem;
+
+    text-align:center;
+
+    transition:var(--transition);
+
+    box-shadow:var(--shadow-md);
+}
+
+.stat-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:var(--shadow-lg);
+}
+
+.stat-number{
+
+    font-size:3rem;
+
+    font-weight:800;
+
+    color:var(--accent-gold);
+
+    line-height:1;
+}
+
+.stat-label{
+
+    margin-top:.7rem;
+
+    color:var(--gray-600);
+
+    font-size:.9rem;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+}
+
+/* =========================
+   CTA BANNER
+========================= */
+
+.cta-banner{
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary-dark),
+            var(--primary)
+        );
+
+    border-radius:36px;
+
+    padding:4rem 2rem;
+
+    text-align:center;
+
+    color:#fff;
+
+    box-shadow:var(--shadow-lg);
+}
+
+.cta-banner h3{
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    margin-bottom:1rem;
+}
+
+.cta-banner p{
+
+    color:rgba(255,255,255,.86);
+
+    margin-bottom:2rem;
+
+    font-size:1.05rem;
+}
+
+.cta-btn{
+
+    display:inline-block;
+
+    padding:1rem 2.4rem;
+
+    border-radius:60px;
+
+    background:var(--accent-gold);
+
+    color:var(--primary-dark);
+
+    text-decoration:none;
+
+    font-weight:800;
+
+    transition:var(--transition);
+
+    box-shadow:
+        0 10px 24px rgba(0,0,0,.2);
+}
+
+.cta-btn:hover{
+
+    background:var(--accent-gold-light);
+
+    transform:translateY(-4px);
+
+    color:var(--primary-dark);
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
-@media (max-width: 768px) {
 
-    .hero-section {
-        height: 260px;
+@media(max-width:992px){
+
+    .hero-section{
+        height:430px;
     }
 
-    .hero-section h1 {
-        font-size: 26px;
+    .hero-section h1{
+        font-size:3rem;
     }
 
-    .about-icon-wrapper {
-        width: 110px;
-        height: 110px;
+    section{
+        padding:70px 0;
+    }
+}
+
+@media(max-width:768px){
+
+    .hero-section{
+        height:360px;
     }
 
-    .about-icon {
-        font-size: 45px;
+    .hero-section h1{
+        font-size:2.3rem;
     }
 
-    .feature-card {
-        padding: 25px 20px;
+    .hero-section p{
+        font-size:1rem;
     }
+
+    .section-title{
+        font-size:1.9rem;
+    }
+
+    .about-icon-wrapper{
+        width:140px;
+        height:140px;
+    }
+
+    .about-icon{
+        font-size:58px;
+    }
+
+    .feature-card{
+        padding:1.6rem;
+    }
+
+    .cta-banner{
+        padding:3rem 1.5rem;
+    }
+}
+
+@media(max-width:576px){
+
+    .hero-section{
+        height:320px;
+    }
+
+    .hero-section h1{
+        font-size:1.9rem;
+    }
+
+    .hero-section p{
+        font-size:.9rem;
+    }
+
+    .section-title{
+        font-size:1.6rem;
+    }
+
+    .stat-number{
+        font-size:2rem;
+    }
+}
+
+/* =========================
+   RTL SUPPORT
+========================= */
+
+body[dir="rtl"] .section-title::after{
+
+    left:auto;
+    right:0;
+}
+
+body[dir="rtl"] .value-item{
+
+    flex-direction:row-reverse;
+}
+
+body[dir="rtl"] .feature-card::before{
+
+    transform-origin:right;
 }

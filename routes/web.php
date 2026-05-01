@@ -128,7 +128,8 @@ Route::get('/', fn() => view('welcome'));
 
 Route::get('/dashboard', [PropertyFrontController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/about', fn() => view('about'));
+Route::get('/about', [PropertyFrontController::class, 'about'])
+    ->name('about');
 Route::get('/contact', fn() => view('contact'));
 //Route::get('/view', fn() => view('view'));
 
@@ -149,6 +150,9 @@ Route::post('/property/{id}/save', [FavoriteController::class,'store'])
 Route::post('/property/{id}/contact', [MessageController::class,'send'])
     ->middleware('auth')
     ->name('property.contact');
+Route::post('/message/reply/{id}', [MessageController::class, 'reply'])
+    ->middleware('auth')
+    ->name('message.reply');
 
 // =======================
 // Property Image Delete

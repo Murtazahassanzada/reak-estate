@@ -31,13 +31,13 @@ public function submit(ContactRequest $request)
 
         // create notification
         foreach ($admins as $admin) {
-            Notification::create([
-                'user_id' => $admin->id,
-                'type' => 'contact',
-                'title' => 'New Contact Message',
-                'body' => 'Message from '.$data['name'],
-                'is_read' => false,
-            ]);
+      Notification::create([
+    'user_id' => $admin->id,
+    'type' => 'contact',
+    'title' => 'New Contact Message',
+    'body' => $data['name'].' : '.$data['message'],
+    'is_read' => false,
+]);
         }
 
         return back()->with('success', __('contact.form.success'));
